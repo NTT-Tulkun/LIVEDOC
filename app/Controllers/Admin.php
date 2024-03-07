@@ -1,5 +1,4 @@
 <?php
-
 class Admin extends Controller
 {
 
@@ -26,24 +25,64 @@ class Admin extends Controller
 
     public function addMedicine()
     {
-        if(isset($_POST['addMedicine'])){
-        $this->data['error']['nameMedicine']= $this->checkNameMedicine();
-        $this->data['error']['typeMedicine']= $this->checkTypeMedicine();
-        $this->data['error']['quantity']= $this->checkQuantityMedicine();
-        $this->data['error']['manufacture']= $this->checkManufMedicine();
-        $this->data['error']['expiry']= $this->checkExpiryMedicine();
-        $this->data['error']['price']= $this->checkPriceMedicine();
-        $this->data['error']['unit']= $this->checkUnitMedicine();
-        }
         $this->data['title'] = 'Thêm thuốc mới';
-        $this->data['listTypeMedicine']=$this->model->getListTable('type_medicine');
-        
+        $this->data['listTypeMedicine']=    $this->model->getListTable('type_medicine');
+
+        if(isset($_POST['addMedicine']))
+        {
+            $this->data['error']['nameMedicine']= $this->checkNameMedicine();
+            $this->data['error']['typeMedicine']= $this->checkTypeMedicine();
+            $this->data['error']['quantity']= $this->checkQuantityMedicine();
+            $this->data['error']['manufacture']= $this->checkManufMedicine();
+            $this->data['error']['expiry']= $this->checkExpiryMedicine();
+            $this->data['error']['price']= $this->checkPriceMedicine();
+            $this->data['error']['unit']= $this->checkUnitMedicine();
+            
+            $listMedicine=  $this->model->getListTable('medicine');
+            foreach($listMedicine as $medicine)
+            {
+                if($_POST['nameMedicine']==$medicine['name_medicine']){
+                    $this->data['error']['nameMedicine']= 'Thuốc đã tồn tại!';
+                }
+            }
+
+            if($this->data['error']['nameMedicine']=='' && $this->data['error']['typeMedicine']=='' && $this->data['error']['quantity']=='' 
+            && $this->data['error']['manufacture']=='' && $this->data['error']['expiry']=='' && $this->data['error']['price']=='' 
+            && $this->data['error']['unit']=='')
+            {
+                $this->data['error']=array();
+            }
+
+            if(empty($this->data['error']))
+            {
+                // Thêm dữ liệu vào cơ sở dữ liệu
+                $data = [
+                    'name_medicine' => $_POST['nameMedicine'],
+                    'date_manufacture' => $_POST['manufacture'],
+                    'expiry' => $_POST['expiry'],
+                    'medicine_price' => $_POST['price'],
+                    'unit' => $_POST['unit'],
+                    'id_type_medicine' => $_POST['typeMedicine']
+                ];
+                $result =  $this->model->InsertData('medicine',$data);
+                if($result)
+                {
+                echo "<script>alert('Thêm thành công thuốc mới')</script>";
+                
+                $redirectUrl = _WEB_ROOT . "/admin/listMedicine";
+                header("refresh:0.5; url=$redirectUrl");
+                exit();
+                }
+            }  
+        }
         $this->view("Admin/Medicine/AddMedicine",  $this->data);
     }
 
     public function listMedicine()
     {
         $this->data['title'] = 'Danh sách thuốc';
+        $this->data['listMedicine']=$this->model->getListFromTowTables('medicine','type_medicine','id_type_medicine','id_type_medicine');
+        
         $this->view("Admin/Medicine/listMedicine",  $this->data);
     }
 

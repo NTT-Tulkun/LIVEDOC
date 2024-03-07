@@ -65,8 +65,6 @@ class AdminModel extends Database
 
 
 
-
-
     public function insertposts($posts)
     {
         $insert = '';

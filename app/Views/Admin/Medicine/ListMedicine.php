@@ -29,20 +29,22 @@ require './app/Views/inc/HeaderAdmin.php';
 
                 <div class="modal-body">
                     <table class="table table bordered">
-                        <tr>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Tên thuốc</th>
+                                <th>Ngày sản xuất</th>
+                                <th>Hạn sử dụng</th>
+                                <th>Đơn vị</th>
+                                <th>Giá</th>
+                            </tr>
+                        </thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                     </table>
                 </div>
 
@@ -67,11 +69,14 @@ require './app/Views/inc/HeaderAdmin.php';
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Integration Specialist</td>
-                                <td>New York</td>
-                                <td>
+                            <?php
+                                $dem=1;
+                                foreach($listMedicine as $medicine){?>
+                                    <tr>
+                                    <td><?php echo $dem;?></td>
+                                    <td><?php echo $medicine['name_medicine'];?></td>
+                                    <td><?php echo $medicine['name_type_medicine'];?></td>
+                                    <td>
                                     <a href="" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                                     </button>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteMedicine">
@@ -80,6 +85,13 @@ require './app/Views/inc/HeaderAdmin.php';
                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#MedicineDetail"><i class="bi bi-eye"></i></button>
                                 </td>
                             </tr>
+                           
+                            <?php
+                                $dem=$dem+1;
+                                }
+                            ?>
+                           
+                                   
 
 
                         </tbody>
@@ -92,6 +104,9 @@ require './app/Views/inc/HeaderAdmin.php';
     </div>
 </div>
 <?php
+echo "<pre>";
+$dem=$listMedicine[0]['id_medicine'];
+print_r($listMedicine[$dem]);
 require './app/Views/inc/FooterAdmin.php';
 
 ?>
