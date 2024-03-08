@@ -28,7 +28,7 @@ class AdminModel extends Database
     public function getListFromTowTables($tableName1, $tableName2, $columnName1, $columnName2,  $condition = '')
     {
         $query = "SELECT * FROM $tableName1 
-        INNER JOIN $tableName2 ON $tableName1.$columnName1 = $tableName2.$columnName2  $condition";
+        INNER JOIN $tableName2 ON $tableName1.$columnName1 = $tableName2.$columnName2 $condition";
         $result = mysqli_query($this->connect, $query);
         $data = array();
         if ($result && mysqli_num_rows($result) > 0) {
@@ -60,6 +60,14 @@ class AdminModel extends Database
         $values = implode("', '", array_values($data));
         $insert = "INSERT INTO `$tableName` ($columns) VALUES('$values');";
         $kq = mysqli_query($this->connect, $insert);
+        return $kq;
+    }
+
+
+    public function DeleteData($tableName, $condition)
+    {
+        $delete = "DELETE FROM `$tableName` $condition;";
+        $kq = mysqli_query($this->connect, $delete);
         return $kq;
     }
 

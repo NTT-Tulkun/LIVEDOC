@@ -83,6 +83,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="<?php echo _WEB_ROOT;  ?>/admin/listmedicine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Quản lý thuốc</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                 <i class="bi bi-file-earmark-medical"></i>
                     <span>Quản lý bài viết</span></a>
