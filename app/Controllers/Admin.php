@@ -126,7 +126,6 @@ class Admin extends Controller
             }
 
             if (empty($this->data['error'])) {
-                // Thêm dữ liệu vào cơ sở dữ liệu
                 $data = [
                     'name_medicine' => $_POST['nameMedicine'],
                     'quantity' => $_POST['quantity'],
@@ -161,43 +160,16 @@ class Admin extends Controller
         $this->data['role'] = $this->model->getListTable('role');
         $this->data['department'] = $this->model->getListTable('department');
 
-        if (!empty($_POST)) {
-            $fullname = $_POST['fullname'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $birthday = $_POST['birthday'];
-            $gender = $_POST['gender'];
-            $certificate = $_POST['certificate'];
-            $experience = $_POST['experience'];
-            $description = $_POST['description'];
-            $id_role = $_POST['role'];
-            if (!empty($_POST['id_department'])) {
-                $id_department = $_POST['id_department'];
-            } else {
-                $id_department = null;
-            }
-
-            $data = [
-                'full_name' => "$fullname",
-                'email' => "$email",
-                'password' => md5(123456),
-                'phone' => "$phone",
-                'birthday' => $birthday,
-                'gender' => $gender,
-                'certificate' => $certificate,
-                'experience' => $experience,
-                'description' => $description,
-                'id_role' => $id_role,
-                'id_department' => $id_department,
-
-            ];
-
-            $this->model->InsertData('staff', $data);
-        }
+     
         $this->data['title'] = 'Thêm người dùng';
+        if($dieuken ==true){
+            $this->view("Admin/Users/sendMailUser");
+
+        }
         $this->view("Admin/Users/addUsers", $this->data);
     }
 
+  
 
 
     public function listUsersStaff()
