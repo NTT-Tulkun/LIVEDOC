@@ -5,9 +5,9 @@
 class Home extends Controller
 {
 
-    public $model;
+    private $model;
 
-    public $data = [];
+    private $data = [];
 
 
 

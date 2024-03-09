@@ -3,9 +3,9 @@
 class Personal extends Controller
 {
 
-    public $model;
+    private $model;
 
-    public $data = [];
+    private $data = [];
 
 
 
@@ -26,29 +26,24 @@ class Personal extends Controller
 
     function medicalBill()
     {
-        $this->data['medicine'] = $this->model->getTable('medicine');
+        $this->data['medicine'] = $this->model->getListTable('medicine');
         $this->view("Personal/MedicalBill",  $this->data);
     }
 
     function prescription()
     {
-        $this->data['medicine'] = $this->model->getTable('medicine');
+        $this->data['medicine'] = $this->model->getListTable('medicine');
         $this->view("Personal/Prescription",  $this->data);
     }
 
     function workCalendar()
     {
-        $this->data['medicine'] = $this->model->getTable('medicine');
+        $this->data['medicine'] = $this->model->getListTable('medicine');
         $this->view("Personal/WorkCalendar",  $this->data);
     }
 
     public function updateUsers(){
-    //     $value = $_GET['value'];
-    //     $id= $_GET['id'];
-    //    echo $value;
-    //    echo $id;
-    echo "<pre>";
-    print_r($_POST);
+  
  
      }
 }

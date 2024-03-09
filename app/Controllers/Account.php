@@ -4,8 +4,9 @@
 class Account extends Controller
 {
 
-    public $data = [];
-    public $model;
+    private $model;
+
+    private $data = [];
 
     public function __construct()
     {
@@ -80,11 +81,13 @@ class Account extends Controller
             $this->data['error']['gender'] = $this->checkGender();
             
             $listUserPatient =   $this->model->getListTable('patient');
-            foreach($listUserPatient as $patient){
-                if($patient['email']==$_POST['email']){
+            $listUserPatient =   $this->model->getListTable('staff');
+
+            foreach(array_merge($listUserPatient, $listUserPatient)as $user){
+                if($user['email']==$_POST['email']){
                     $this->data['error']['email'] = 'Email đã được sử dụng';
                 }
-                if($patient['phone']==$_POST['phone']){
+                if($user['phone']==$_POST['phone']){
                     $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
                 }
             }

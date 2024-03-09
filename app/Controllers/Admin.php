@@ -2,9 +2,9 @@
 class Admin extends Controller
 {
 
-    public $model;
+    private $model;
 
-    public $data = [];
+    private $data = [];
 
     public function __construct()
     {
@@ -27,7 +27,6 @@ class Admin extends Controller
     {
         $this->data['title'] = 'Danh sách thuốc';
         $this->data['listMedicine'] = $this->model->getListFromTowTables('medicine', 'type_medicine', 'id_type_medicine', 'id_type_medicine');
-
         $this->view("Admin/Medicine/listMedicine", $this->data);
     }
 
@@ -95,7 +94,7 @@ class Admin extends Controller
     }
 
     public function updateMedicine($id_medicine){
-        $this->data['Medicine'] = $this->model->getListTable('medicine', 'type_medicine', 'id_type_medicine' ,'id_type_medicine', "Where medicine.id_medicine = $id_medicine");
+        $this->data['Medicine'] = $this->model->getListFromTowTables('medicine', 'type_medicine', 'id_type_medicine' ,'id_type_medicine', "Where medicine.id_medicine = $id_medicine");
   
         $this->data['title'] = 'Cập nhật thuốc';
         $this->view("Admin/Medicine/updateMedicine", $this->data);
