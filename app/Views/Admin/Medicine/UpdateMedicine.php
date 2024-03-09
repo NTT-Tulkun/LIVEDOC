@@ -25,10 +25,10 @@ require './app/Views/inc/HeaderAdmin.php';
                 <div class="col-4 mb-1">
                     <label for="validationDefault04" class="form-label">Chọn loại thuốc:</label>
                     <select class="form-select" name="typeMedicine">
-                    <option value="0">Chọn loại thuốc...</option>
+                    <option value="<?php echo $Medicine[0]['id_type_medicine'] ?>"><?php echo $Medicine[0]['name_type_medicine'] ?></option>
                         <?php 
-                        foreach($listTypeMedicine as $type){ ?>
-                 <option value="<?php echo $type['id_type_medicine'];?>"><?php echo $type['name_type_medicine'];?></option>
+                        foreach($TypeMedicine as $type){ ?>
+                        <option value="<?php echo $type['id_type_medicine'];?>"><?php echo $type['name_type_medicine'];?></option>
                         <?php            
                         }
                         ?>
@@ -41,7 +41,7 @@ require './app/Views/inc/HeaderAdmin.php';
 
                 <div class="col-4 mb-3">
                     <label for="validationDefault03" class="form-label">Nhập số lượng:</label>
-                    <input type="number" class="form-control" name="quantity" placeholder="Số lượng" >
+                    <input type="number" class="form-control" name="quantity" placeholder="Số lượng" value="<?php echo $Medicine[0]['quantity'] ?>">
                     <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['quantity'])) {
                                                 echo $error['quantity'];
@@ -50,7 +50,7 @@ require './app/Views/inc/HeaderAdmin.php';
 
                 <div class="col-4 mb-3">
                     <label for="validationDefault02" class="form-label">Ngày sản xuất:</label>
-                    <input type="date" class="form-control" name="manufacture" >
+                    <input type="date" class="form-control" name="manufacture" value="<?php echo $Medicine[0]['date_manufacture'] ?>">
                     <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['manufacture'])) {
                                                 echo $error['manufacture'];
@@ -59,7 +59,7 @@ require './app/Views/inc/HeaderAdmin.php';
 
                 <div class="col-4 mb-3">
                     <label for="validationDefault02" class="form-label">Hạn sử dụng:</label>
-                    <input type="date" class="form-control" name="expiry" >
+                    <input type="date" class="form-control" name="expiry" value="<?php echo $Medicine[0]['expiry'] ?>">
                     <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['expiry'])) {
                                                 echo $error['expiry'];
@@ -68,7 +68,7 @@ require './app/Views/inc/HeaderAdmin.php';
 
                 <div class="col-4 mb-3">
                     <label for="validationDefault02" class="form-label">Giá:</label>
-                        <input type="number" class="form-control" name="price" placeholder="Giá mỗi lọ" >
+                        <input type="number" class="form-control" name="price" placeholder="Giá mỗi lọ" value="<?php echo $Medicine[0]['medicine_price'] ?>">
                         <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['price'])) {
                                                 echo $error['price'];
@@ -78,7 +78,7 @@ require './app/Views/inc/HeaderAdmin.php';
                 <div class="col-4 mb-3">
                     <label for="validationDefault02" class="form-label">Đơn vị:</label>
                     <select class="form-select" name="unit" >
-                        <option value="0">---Chọn---</option>
+                        <option value="<?php echo $Medicine[0]['unit'] ?>"><?php echo $Medicine[0]['unit'] ?></option>
                         <option value="Hộp">Hộp</option>
                         <option value="Lọ">Lọ</option>
                         <option value="Viên">Viên</option>
@@ -93,8 +93,13 @@ require './app/Views/inc/HeaderAdmin.php';
                                               } ?></b></p>
                 </div>
 
+                <div class="col-4 mb-3" style="display: none;">
+                    <label for="validationDefault02" class="form-label">ID:</label>
+                        <input type="number" class="form-control" name="id_medicine" value="<?php echo $Medicine[0]['id_medicine'] ?>">
+                </div>
+
                 <div class="col-12 text-center">
-                    <input type="submit" class="btn btn-primary" value="Thêm thuốc mới" name="addMedicine">
+                    <input type="submit" class="btn btn-primary" value="Cập nhật thuốc" name="updateMedicine">
 
                 </div>
             </form>
@@ -105,4 +110,5 @@ require './app/Views/inc/HeaderAdmin.php';
 
     <?php
     require './app/Views/inc/FooterAdmin.php';
+    print_r($Medicine);
     ?>

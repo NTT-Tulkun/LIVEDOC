@@ -122,6 +122,7 @@ class Validate
         }
     }
 
+
     function checkTypeMedicine()
     {
         if (empty($_POST['typeMedicine'])) {
