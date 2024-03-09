@@ -72,4 +72,20 @@ class Model extends Database
         $kq = mysqli_query($this->connect, $delete);
         return $kq;
     }
+
+    public function updateData($tableName, $updates, $conditions)
+    {
+        $setUpdate = [];
+        foreach ($updates as $column => $value) {
+            $setUpdate[] = "`$column` = '$value'";
+        }
+        $set = implode(", ", $setUpdate);
+        
+        $updateQuery = "UPDATE `$tableName` SET $set WHERE $conditions;";
+        
+        $result = mysqli_query($this->connect, $updateQuery);
+        
+        return $result;
+    }
+    
 }
