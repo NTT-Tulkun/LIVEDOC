@@ -13,5 +13,7 @@ class Controller extends Validate{
         require_once "./app/Views/".$view.".php";
     }
 
+    
+
 }
 ?>

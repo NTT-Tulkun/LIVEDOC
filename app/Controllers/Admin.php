@@ -162,10 +162,10 @@ class Admin extends Controller
 
      
         $this->data['title'] = 'Thêm người dùng';
-        if($dieuken ==true){
-            $this->view("Admin/Users/sendMailUser");
+        // if($dieuken ==true){
+        //     $this->view("Admin/Users/sendMailUser");
 
-        }
+        // }
         $this->view("Admin/Users/addUsers", $this->data);
     }
 

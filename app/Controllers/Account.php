@@ -79,7 +79,11 @@ class Account extends Controller
             $this->data['error']['phone'] = $this->checkPhone();
             $this->data['error']['birthday'] = $this->checkBorn();
             $this->data['error']['gender'] = $this->checkGender();
+           
             
+           
+          
+
             $listUserPatient =   $this->model->getListTable('patient');
             $listUserPatient =   $this->model->getListTable('staff');
 
@@ -91,17 +95,21 @@ class Account extends Controller
                     $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
                 }
             }
+
+           
             
             if($_POST['password']!=$_POST['confirm_password']){
                 $this->data['error']['confirm_password'] = 'Mật khẩu bạn nhập lại không khớp';
             }
 
-            if($this->data['error']['email']=='' && $this->data['error']['fullname']=='' && $this->data['error']['phone']=='' &&
-            $this->data['error']['birthday']=='' && $this->data['error']['gender']=='' && $this->data['error']['password']=='' &&
-            $this->data['error']['confirm_password']==''){
-                 $this->data['error']=array();
+
+            foreach ($this->data['error'] as $key => $value) {
+                if ($value === '') {
+                    unset($this->data['error'][$key]);
+                }
             }
-       
+
+           
             if(empty($this->data['error'])){
                 $fullname = $_POST['fullname'];
                 $email = $_POST['email'];
@@ -129,6 +137,7 @@ class Account extends Controller
             }
         }
         $this->view("Account/Register", $this->data);
+       
     }
 
     function ForgotPassword()

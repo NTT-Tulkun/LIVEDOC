@@ -24,8 +24,6 @@
         <div class="card-body col-lg-12">
           <h4 class="title text-center mt-4">
             Đăng kí
-
-
           </h4>
 
 
@@ -33,7 +31,10 @@
             <div class="form-row">
               <div class="col-md-6 mb-3">
                 <label for=""><b>Họ và tên:</b></label>
-                <input type="text" class="form-control" placeholder="Họ và tên" value="" name="fullname">
+                <input type="text" class="form-control" placeholder="Họ và tên" value="<?php
+                if (!empty($_POST['fullname']) && empty($error['fullname'])) {
+                  echo $_POST['fullname'];
+                } ?>" name="fullname">
                 <p class="text-danger error"><?php
                                               if (!empty($error['fullname'])) {
                                                 echo $error['fullname'];
@@ -41,7 +42,10 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for=""><b>số điện thoại:</b></label>
-                <input type="number" class="form-control" placeholder="Số điện thoại" min="0" value="" name="phone">
+                <input type="number" class="form-control" placeholder="Số điện thoại" min="0" value="<?php
+                if (!empty($_POST['phone']) && empty($error['phone'])) {
+                  echo $_POST['phone'];
+                } ?>" name="phone">
                 <p class="text-danger error"><?php
                                               if (!empty($error['phone'])) {
                                                 echo $error['phone'];
@@ -53,7 +57,10 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend3">@</span>
                   </div>
-                  <input type="text" class="form-control " placeholder="Email" name="email">
+                  <input type="text" class="form-control " placeholder="Email" name="email" value="<?php
+                if (!empty($_POST['email']) && empty($error['email'])) {
+                  echo $_POST['email'];
+                } ?>">
                 </div>
                 <p class="text-danger error"><?php
                                               if (!empty($error['email'])) {
@@ -64,7 +71,10 @@
 
               <div class="col-md-6 mb-3">
                 <label for="validationServer03"><b>Ngày sinh:</b></label>
-                <input type="date" class="form-control" placeholder="Ngày sinh" name="birthday">
+                <input type="date" class="form-control" placeholder="Ngày sinh" name="birthday" value="<?php
+                if (!empty($_POST['birthday']) && empty($error['birthday'])) {
+                  echo $_POST['birthday'];
+                } ?>">
                 <p class="text-danger error"><?php
                                               if (!empty($error['birthday'])) {
                                                 echo $error['birthday'];
@@ -101,8 +111,6 @@
               </div>
             </div>
             <div class="form-row">
-
-
 
 
 
