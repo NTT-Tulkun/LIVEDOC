@@ -5,6 +5,7 @@ class Validate
     public $error = [];
 
 
+
     function checkBorn()
     {
         if (empty($_POST["birthday"])) {
@@ -13,7 +14,7 @@ class Validate
         } else {
             $born_date = new DateTime($_POST["birthday"]);
             $current_date = new DateTime();
-            if ($born_date  > $current_date) {
+            if ($born_date > $current_date) {
                 $this->error['birthday'] = "Ngày sinh phải nhỏ hơn ngày hiện tại !";
                 return $this->error['birthday'];
             } else {
@@ -91,7 +92,7 @@ class Validate
             $this->error['confirm_password'] = " Vui lòng nhập lại mật khẩu !";
             return $this->error['confirm_password'];
         } else {
-            if ($_POST["confirm_password"] !=  $_POST["password"]) {
+            if ($_POST["confirm_password"] != $_POST["password"]) {
                 $this->error['confirm_password'] = " Mật khẩu không khớp !";
                 return $this->error['confirm_password'];
             } else {
@@ -138,12 +139,10 @@ class Validate
     function checkQuantityMedicine()
     {
         if (empty($_POST['quantity'])) {
-        
-                $this->error['quantity'] = " Vui lòng nhập số lượng !";
-                return $this->error['quantity'];
-        }
-        else
-        {
+
+            $this->error['quantity'] = " Vui lòng nhập số lượng !";
+            return $this->error['quantity'];
+        } else {
             if ($_POST["quantity"] <= 0) {
                 $this->error['quantity'] = "Số lượng phải lớn hơn 0!";
                 return $this->error['quantity'];
@@ -161,7 +160,7 @@ class Validate
         } else {
             $born_date = new DateTime($_POST["manufacture"]);
             $current_date = new DateTime();
-            if ($born_date  >= $current_date) {
+            if ($born_date >= $current_date) {
                 $this->error['manufacture'] = "Ngày sản xuất phải nhỏ hơn hoặc bằng ngày hiện tại!";
                 return $this->error['manufacture'];
             } else {
@@ -178,7 +177,7 @@ class Validate
         } else {
             $born_date = new DateTime($_POST["expiry"]);
             $current_date = new DateTime();
-            if ($born_date  <= $current_date) {
+            if ($born_date <= $current_date) {
                 $this->error['expiry'] = "Hạn sử dụng phải lớn hơn ngày hiện tại!";
                 return $this->error['expiry'];
             } else {
@@ -190,12 +189,10 @@ class Validate
     function checkPriceMedicine()
     {
         if (empty($_POST['price'])) {
-        
-                $this->error['price'] = " Vui lòng nhập giá cho thuốc!";
-                return $this->error['price'];
-        }
-        else
-        {
+
+            $this->error['price'] = " Vui lòng nhập giá cho thuốc!";
+            return $this->error['price'];
+        } else {
             if ($_POST["price"] < 1000) {
                 $this->error['price'] = "Gía phải lớn hơn hoặc bằng 1000!";
                 return $this->error['price'];
