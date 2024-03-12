@@ -12,15 +12,23 @@
 
 
 
-          <form class="row g-3 m-3" id="insert_data_user">
+          <form class="row g-3 m-3" id="insert_data_user" method="POST" action="">
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập họ tên:</b></label>
               <input type="text" class="form-control" placeholder="Họ tên" id="fullname" name="fullname">
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['fullname'])) {
+                                                echo $error['fullname'];
+                                              } ?></b></p>
             </div>
 
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập email:</b></label>
               <input type="email" class="form-control" placeholder="Email" id="email" name="email">
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['email'])) {
+                                                echo $error['email'];
+                                              } ?></b></p>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -29,28 +37,51 @@
               <label for="" class="mr-3">Nam</label>
               <input type="radio" name="gender" class="ml-3" id="gender" value="Nữ">
               <label for="">Nữ</label>
-
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['gender'])) {
+                                                echo $error['gender'];
+                                              } ?></b></p>
             </div>
 
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập số điện thoại:</b></label>
               <input type="number" class="form-control" placeholder="số điện thoại" id="phone" name="phone">
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['phone'])) {
+                                                echo $error['phone'];
+                                              } ?></b></p>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập năm sinh:</b></label>
               <input type="date" class="form-control" placeholder="năm sinh" id="birthday" name="birthday">
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['birthday'])) {
+                                                echo $error['birthday'];
+                                              } ?></b></p>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập bằng cấp:</b></label>
               <input type="text" class="form-control" placeholder="Bằng cấp" id="certificate" name="certificate">
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['certificate'])) {
+                                                echo $error['certificate'];
+                                              } ?></b></p>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập kinh nghiệm làm việc:</b></label><br>
               <textarea name="experience" id="experience" cols="60" rows="5" placeholder="Kinh nghiệm làm việc"></textarea>
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['experience'])) {
+                                                echo $error['experience'];
+                                              } ?></b></p>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập mô tả:</b></label><br>
               <textarea name="description" id="description" cols="60" rows="5" placeholder="Mô tả"></textarea>
+              <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['description'])) {
+                                                echo $error['description'];
+                                              } ?></b></p>
             </div>
 
 
@@ -62,12 +93,16 @@
               if ($item['id_role'] != 5) {
             ?>
                 <div class="col-md-2 m-3">
-                  <input class="form-check-input" type="radio" name="role" id="role<?php echo $item['id_role'] ?>" value="<?php echo $item['id_role'] ?>" onclick="toggleOptions()">
+                  <input class="form-check-input custom-radio border-primary" type="radio" name="role" id="role<?php echo $item['id_role'] ?>" value="<?php echo $item['id_role'] ?>" onclick="toggleOptions()">
                   <label for="role<?php echo $item['id_role'] ?>"><?php echo $item['name_role'] ?></label>
                 </div>
             <?php
               }
             } ?>
+            <p class="text-danger mt-2"><b><?php
+                                              if (!empty($error['role'])) {
+                                                echo $error['role'];
+                                              } ?></b></p>
             <div id="department" style="display: none;">
               <select name="department" class="form-select" id="depmt">
                 <option value="0">Chọn phòng ban cho bác sĩ....</option>
@@ -75,11 +110,12 @@
                   <option value="<?php echo $item['id_department'] ?>"><?php echo $item['department_name'] ?></option>
                 <?php } ?>
               </select>
+             
             </div>
 
 
             <div class="col-12 text-center">
-              <input type="submit" value="Thêm người dùng" class="btn btn-primary" id="addUser">
+              <input type="submit" value="Thêm người dùng" class="btn btn-primary" id="addUser" name="addUser">
 
             </div>
           </form>

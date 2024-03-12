@@ -217,4 +217,56 @@ class Validate
         }
     }
 
+    function checkCertificate()
+    {
+        if (empty($_POST["certificate"])) {
+            $this->error['certificate'] = "Vui lòng cung cấp chứng chỉ cần thiết!";
+            return $this->error['certificate'];
+        } else {
+            return '';
+        }
+    }
+
+    function checkExperience()
+    {
+        if (empty($_POST["experience"])) {
+            $this->error['experience'] = "Vui lòng chứng chỉ bằng cấp cần thiết!";
+            return $this->error['experience'];
+        } else {
+            return '';
+        }
+    }
+
+    function checkDescription()
+    {
+        if (empty($_POST["description"])) {
+            $this->error['description'] = "Vui lòng nhập mô tả!";
+            return $this->error['description'];
+        } else {
+            return '';
+        }
+    }
+
+    function checkRole()
+    {
+        if (empty($_POST["role"])) {
+            $this->error['role'] = "Vui lòng chọn vai trò người dùng!";
+            return $this->error['role'];
+        } else {
+            return '';
+        }
+    }
+
+    function checkDepartment()
+    {
+        if (empty($_POST['department'])) {
+            if ($_POST["department"] == 0) {
+                $this->error['department'] = "Vui lòng chọn chuyên khoa cho bác sĩ!";
+                return $this->error['department'];
+            } else {
+                return '';
+            }
+        }
+    }
+
 }
