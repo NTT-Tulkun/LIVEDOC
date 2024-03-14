@@ -160,7 +160,7 @@ class Admin extends Controller
         $this->data['role'] = $this->model->getListTable('role');
         $this->data['department'] = $this->model->getListTable('department');
         $listUserPatient =   $this->model->getListTable('patient');
-        $listUserPatient =   $this->model->getListTable('staff');
+        $listStaff =   $this->model->getListTable('staff');
 
         if (isset($_POST['addUser'])) {
         $this->data['error']['fullname'] = $this->checkFullName();
@@ -170,31 +170,54 @@ class Admin extends Controller
         $this->data['error']['birthday'] = $this->checkBorn();
         $this->data['error']['certificate'] = $this->checkCertificate();
         $this->data['error']['experience'] = $this->checkExperience();
-        $this->data['error']['experience'] = $this->checkDescription();
+        $this->data['error']['description'] = $this->checkDescription();
         $this->data['error']['role'] = $this->checkRole();
-        $this->data['error']['role'] = $this->checkDepartment();
+        $this->data['error']['department'] = $this->checkDepartment();
         
-        
+        foreach(array_merge($listUserPatient, $listStaff)as $user){
+            if($user['email']==$_POST['email']){
+                $this->data['error']['email'] = 'Email đã được sử dụng';
+            }
+            if($user['phone']==$_POST['phone']){
+                $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
+            }
+        }
+
+        foreach ($this->data['error'] as $key => $value) {
+            if ($value =='') {
+                unset($this->data['error'][$key]);
+            }
+        }
+
+        if(empty($this->data['error'])){
+            $this->data['fullname'] = $_POST['fullname'];
+            $this->data['email']  = $_POST['email'];
+            $this->data['phone'] = $_POST['phone'];
+            $this->data['role'] = $_POST['role'];
+            $data = [
+                'full_name' => $_POST['fullname'],
+                'email' => $_POST['email'],
+                'password' => md5('123456'),
+                'phone' => $_POST['phone'],
+                'birthday' => $_POST['birthday'],
+                'gender' => $_POST['gender'],
+                'id_role' => $_POST['role'],
+                'certificate'=> $_POST['certificate'],
+                'description'=> $_POST['description'],
+                'experience'=>  $_POST['experience'],
+            ];
+            if($_POST['role']==4)
+            {
+                $data['id_department']=$_POST['department'];
+            }
+          $result =  $this->model->InsertData('staff',$data);
+          if($result){
+            echo "<script>alert('Bạn đã thêm thành công tài khoản')</script>";
+            $this->view("Admin/Users/sendMailUser",$this->data);
+          }
         }
         
-
-       
-
-        // foreach(array_merge($listUserPatient, $listUserPatient)as $user){
-        //     if($user['email']==$_POST['email']){
-        //         $this->data['error']['email'] = 'Email đã được sử dụng';
-        //     }
-        //     if($user['phone']==$_POST['phone']){
-        //         $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
-        //     }
-        // }
-
-     
-        
-        // if($dieuken ==true){
-            // $this->view("Admin/Users/sendMailUser");
-
-        // }
+        }   
         $this->view("Admin/Users/addUsers", $this->data);
     }
 

@@ -15,7 +15,6 @@ class Account extends Controller
 
     function login()
     {
-
         if (isset($_POST['login'])) {
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['password'] = $this->checkPassword();
@@ -68,7 +67,6 @@ class Account extends Controller
 
 
 
-
     function register()
     {
         if (isset($_POST['register'])) {
@@ -80,14 +78,10 @@ class Account extends Controller
             $this->data['error']['birthday'] = $this->checkBorn();
             $this->data['error']['gender'] = $this->checkGender();
            
-            
-           
-          
-
             $listUserPatient =   $this->model->getListTable('patient');
-            $listUserPatient =   $this->model->getListTable('staff');
+            $listStaff =   $this->model->getListTable('staff');
 
-            foreach(array_merge($listUserPatient, $listUserPatient)as $user){
+            foreach(array_merge($listUserPatient, $listStaff)as $user){
                 if($user['email']==$_POST['email']){
                     $this->data['error']['email'] = 'Email đã được sử dụng';
                 }
@@ -95,14 +89,10 @@ class Account extends Controller
                     $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
                 }
             }
-
-           
-            
             if($_POST['password']!=$_POST['confirm_password']){
                 $this->data['error']['confirm_password'] = 'Mật khẩu bạn nhập lại không khớp';
             }
-
-
+            
             foreach ($this->data['error'] as $key => $value) {
                 if ($value === '') {
                     unset($this->data['error'][$key]);

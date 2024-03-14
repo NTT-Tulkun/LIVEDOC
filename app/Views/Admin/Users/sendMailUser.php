@@ -33,12 +33,20 @@ try {
     $mail->Password   = 'vcho tlpc agae yome';                                 //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('minhhuan190102@gmail.com', 'ONEKILL');
-    $mail->addAddress("minhhuan190102@gmail.com", "minhhuan190102@gmail.com");     //Add a recipient // người nhận
+    $mail->setFrom('minhhuan190102@gmail.com', 'LIVEDOC');
+    $mail->addAddress("$email", "$fullname");     //Add a recipient // người nhận
 
-    $mail->addReplyTo('minhhuan190102@gmail.com', 'ONEKILL');
+    $mail->addReplyTo('minhhuan190102@gmail.com', 'LIVEDOC');
   
-
+if($role ==4){
+    $chucvu='Bác sĩ';
+}else if($role==1){
+    $chucvu='Quản trị viên';
+}else if($role==2){
+    $chucvu='Nhân viên tiếp nhận';
+}else{
+    $chucvu="Nhân viên quầy thuốc";
+}
     
   
     $html = "
@@ -74,17 +82,16 @@ try {
     <body>
         <div class='container'>
             <div class='header'>
-            <h2>Xin chào, Bạn !</h2>
+            <h2>Xin chào, $fullname !</h2>
                 <h1>Đây là thông tin của bạn</h1>
             </div>
             <div class='content'>
-            <p>Họ tên : Huan</p>
-            <p>Tên đăng nhập:     Huan</p>
+            <p>Họ tên : $fullname</p>
+            <p>Tên đăng nhập: $email</p>
             <p>Mật khẩu: 123456</p>
-            <p>Mã nhân viên : 123456</p>
-            <p>Số điện thoại:  123456</p>
-            <p>Email:  email</p>
-            <p>Chức vụ:  Bác sĩ</p>
+            <p>Số điện thoại: $phone</p>
+            <p>Email:  $email</p>
+            <p>Chức vụ:$chucvu </p>
                 
             </div>
         </div>
@@ -93,11 +100,11 @@ try {
     ";
 
     $mail->isHTML(true);
-    $mail->Subject = "Xin chào Huan!";
+    $mail->Subject = "Xin chào $fullname!";
     $mail->Body = $html;
 
     $mail->send();
-    echo '<script>alert("Thông tin đã được gửi về email")</script>';
+    // echo '<script>alert("Thông tin đã được gửi về email")</script>';
 
 } catch (Exception $e) {
     echo "Email không được gửi. Chi tiết lỗi: {$mail->ErrorInfo}";

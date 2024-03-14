@@ -32,11 +32,13 @@
               <div class="col-md-6 mb-3">
                 <label for=""><b>Họ và tên:</b></label>
                 <input type="text" class="form-control" placeholder="Họ và tên" value="<?php
-                if (!empty($_POST['fullname']) && empty($error['fullname'])) {
+                if (!empty($_POST['fullname']) && empty($error['fullname'])) 
+                {
                   echo $_POST['fullname'];
                 } ?>" name="fullname">
                 <p class="text-danger error"><?php
-                                              if (!empty($error['fullname'])) {
+                                              if (!empty($error['fullname'])) 
+                                              {
                                                 echo $error['fullname'];
                                               } ?></p>
               </div>
@@ -83,9 +85,23 @@
 
               <div class="col-md-6 mb-3">
                 <label for=""><b>Giới tính:</b> </label>
-                <input type="radio" name="gender" id="" value="Nam" class="ml-3">
+                <input type="radio" name="gender" id="" value="Nam" class="ml-3" 
+                <?php
+                  if (!empty($_POST['gender']) && empty($error['gender'])) {
+                    if($_POST['gender']=='Nam'){
+                       echo 'checked';
+                    }
+                  } 
+                ?>>
                 <label for="">Nam</label>
-                <input type="radio" name="gender" id="" value="Nữ" class="ml-3">
+                <input type="radio" name="gender" id="" value="Nữ" class="ml-3" 
+                <?php
+                  if (!empty($_POST['gender']) && empty($error['gender'])) {
+                    if($_POST['gender']=='Nữ'){
+                       echo 'checked';
+                    }
+                  } 
+                ?>>
                 <label for="">Nữ</label>
                 <p class="text-danger error"><?php
                                               if (!empty($error['gender'])) {
@@ -95,7 +111,10 @@
 
               <div class="col-md-12 mb-3">
                 <label for=""><b>Mật khẩu:</b></label>
-                <input type="password" class="form-control" placeholder="mật khẩu" min="0" value="" name="password">
+                <input type="password" class="form-control" placeholder="mật khẩu" min="0" name="password" value="<?php
+                if (!empty($_POST['password']) && empty($error['password'])) {
+                  echo $_POST['password'];
+                } ?>">
                 <p class="text-danger error"><?php
                                               if (!empty($error['password'])) {
                                                 echo $error['password'];
@@ -103,7 +122,10 @@
               </div>
               <div class="col-md-12 mb-3">
                 <label for=""><b>Nhập lại mật khẩu:</b></label>
-                <input type="password" class="form-control" placeholder="nhập lại mật khẩu" min="0" value="" name="confirm_password">
+                <input type="password" class="form-control" placeholder="nhập lại mật khẩu" min="0" name="confirm_password" value="<?php
+                if (!empty($_POST['confirm_password']) && empty($error['confirm_password'])) {
+                  echo $_POST['confirm_password'];
+                } ?>">
                 <p class="text-danger error"><?php
                                               if (!empty($error['confirm_password'])) {
                                                 echo $error['confirm_password'];
@@ -131,6 +153,6 @@
       </div>
     </div>
   </div>
-</body>
 
+</body>
 </html>

@@ -15,7 +15,11 @@
           <form class="row g-3 m-3" id="insert_data_user" method="POST" action="">
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập họ tên:</b></label>
-              <input type="text" class="form-control" placeholder="Họ tên" id="fullname" name="fullname">
+              <input type="text" class="form-control" placeholder="Họ tên" id="fullname" name="fullname" value="<?php
+                if (!empty($_POST['fullname']) && empty($error['fullname'])) 
+                {
+                  echo $_POST['fullname'];
+                } ?>">
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['fullname'])) {
                                                 echo $error['fullname'];
@@ -24,7 +28,11 @@
 
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập email:</b></label>
-              <input type="email" class="form-control" placeholder="Email" id="email" name="email">
+              <input type="email" class="form-control" placeholder="Email" id="email" name="email" value="<?php
+                if (!empty($_POST['email']) && empty($error['email'])) 
+                {
+                  echo $_POST['email'];
+                } ?>">
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['email'])) {
                                                 echo $error['email'];
@@ -33,9 +41,23 @@
 
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Chọn giới tính:</b></label><br>
-              <input type="radio" name="gender" id="gender" value="Nam">
+              <input type="radio" name="gender" id="gender" value="Nam"
+              <?php
+                  if (!empty($_POST['gender']) && empty($error['gender'])) {
+                    if($_POST['gender']=='Nam'){
+                       echo 'checked';
+                    }
+                  } 
+                ?>>
               <label for="" class="mr-3">Nam</label>
-              <input type="radio" name="gender" class="ml-3" id="gender" value="Nữ">
+              <input type="radio" name="gender" class="ml-3" id="gender" value="Nữ"
+              <?php
+                  if (!empty($_POST['gender']) && empty($error['gender'])) {
+                    if($_POST['gender']=='Nữ'){
+                       echo 'checked';
+                    }
+                  } 
+                ?>>
               <label for="">Nữ</label>
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['gender'])) {
@@ -45,7 +67,11 @@
 
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập số điện thoại:</b></label>
-              <input type="number" class="form-control" placeholder="số điện thoại" id="phone" name="phone">
+              <input type="number" class="form-control" placeholder="số điện thoại" id="phone" name="phone"value="<?php
+                if (!empty($_POST['phone']) && empty($error['phone'])) 
+                {
+                  echo $_POST['phone'];
+                } ?>">
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['phone'])) {
                                                 echo $error['phone'];
@@ -53,7 +79,11 @@
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập năm sinh:</b></label>
-              <input type="date" class="form-control" placeholder="năm sinh" id="birthday" name="birthday">
+              <input type="date" class="form-control" placeholder="năm sinh" id="birthday" name="birthday" value="<?php
+                if (!empty($_POST['birthday']) && empty($error['birthday'])) 
+                {
+                  echo $_POST['birthday'];
+                } ?>">
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['birthday'])) {
                                                 echo $error['birthday'];
@@ -61,7 +91,11 @@
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập bằng cấp:</b></label>
-              <input type="text" class="form-control" placeholder="Bằng cấp" id="certificate" name="certificate">
+              <input type="text" class="form-control" placeholder="Bằng cấp" id="certificate" name="certificate" value="<?php
+                if (!empty($_POST['certificate']) && empty($error['certificate'])) 
+                {
+                  echo $_POST['certificate'];
+                } ?>">
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['certificate'])) {
                                                 echo $error['certificate'];
@@ -69,7 +103,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập kinh nghiệm làm việc:</b></label><br>
-              <textarea name="experience" id="experience" cols="60" rows="5" placeholder="Kinh nghiệm làm việc"></textarea>
+              <textarea name="experience" id="experience" class="p-1" cols="60" rows="5" placeholder="Kinh nghiệm làm việc"><?php if (!empty($_POST['experience']) && empty($error['experience'])) {echo $_POST['experience'];} ?></textarea>
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['experience'])) {
                                                 echo $error['experience'];
@@ -77,7 +111,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label"><b>Nhập mô tả:</b></label><br>
-              <textarea name="description" id="description" cols="60" rows="5" placeholder="Mô tả"></textarea>
+              <textarea name="description" class="p-1" id="description" cols="60" rows="5" placeholder="Mô tả"><?php if (!empty($_POST['description']) && empty($error['description'])) { echo $_POST['description'];} ?></textarea>
               <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['description'])) {
                                                 echo $error['description'];
@@ -125,7 +159,6 @@
       </div>
       <?php
       require './app/Views/inc/FooterAdmin.php';
-
       ?>
 
 
