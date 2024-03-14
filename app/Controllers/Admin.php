@@ -156,16 +156,68 @@ class Admin extends Controller
 
     public function addUsers()
     {
-
+        $this->data['title'] = 'Thêm người dùng';
         $this->data['role'] = $this->model->getListTable('role');
         $this->data['department'] = $this->model->getListTable('department');
+        $listUserPatient =   $this->model->getListTable('patient');
+        $listStaff =   $this->model->getListTable('staff');
 
-     
-        $this->data['title'] = 'Thêm người dùng';
-        // if($dieuken ==true){
-        //     $this->view("Admin/Users/sendMailUser");
+        if (isset($_POST['addUser'])) {
+        $this->data['error']['fullname'] = $this->checkFullName();
+        $this->data['error']['email'] = $this->checkEmail();
+        $this->data['error']['gender'] = $this->checkGender();
+        $this->data['error']['phone'] = $this->checkPhone();
+        $this->data['error']['birthday'] = $this->checkBorn();
+        $this->data['error']['certificate'] = $this->checkCertificate();
+        $this->data['error']['experience'] = $this->checkExperience();
+        $this->data['error']['description'] = $this->checkDescription();
+        $this->data['error']['role'] = $this->checkRole();
+        $this->data['error']['department'] = $this->checkDepartment();
+        
+        foreach(array_merge($listUserPatient, $listStaff)as $user){
+            if($user['email']==$_POST['email']){
+                $this->data['error']['email'] = 'Email đã được sử dụng';
+            }
+            if($user['phone']==$_POST['phone']){
+                $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
+            }
+        }
 
-        // }
+        foreach ($this->data['error'] as $key => $value) {
+            if ($value =='') {
+                unset($this->data['error'][$key]);
+            }
+        }
+
+        if(empty($this->data['error'])){
+            $this->data['fullname'] = $_POST['fullname'];
+            $this->data['email']  = $_POST['email'];
+            $this->data['phone'] = $_POST['phone'];
+            $this->data['role'] = $_POST['role'];
+            $data = [
+                'full_name' => $_POST['fullname'],
+                'email' => $_POST['email'],
+                'password' => md5('123456'),
+                'phone' => $_POST['phone'],
+                'birthday' => $_POST['birthday'],
+                'gender' => $_POST['gender'],
+                'id_role' => $_POST['role'],
+                'certificate'=> $_POST['certificate'],
+                'description'=> $_POST['description'],
+                'experience'=>  $_POST['experience'],
+            ];
+            if($_POST['role']==4)
+            {
+                $data['id_department']=$_POST['department'];
+            }
+          $result =  $this->model->InsertData('staff',$data);
+          if($result){
+            echo "<script>alert('Bạn đã thêm thành công tài khoản')</script>";
+            $this->view("Admin/Users/sendMailUser",$this->data);
+          }
+        }
+        
+        }   
         $this->view("Admin/Users/addUsers", $this->data);
     }
 

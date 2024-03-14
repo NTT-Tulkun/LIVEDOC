@@ -15,7 +15,6 @@ require './app/Views/inc/HeaderAdmin.php';
                 <div class="col-md-12 mb-1">
                     <label for="nameMedicine" class="form-label">Nhập tên thuốc:</label>
                     <input type="text" class="form-control" name="nameMedicine" id="nameMedicine" placeholder="Tên thuốc">
-                 
                     <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['nameMedicine'])) {
                                                 echo $error['nameMedicine'];
