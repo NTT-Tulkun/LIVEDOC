@@ -10,23 +10,11 @@ require './app/Views/inc/HeaderAdmin.php';
 
     <div class="container-fluid">
 
-
-
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-
                 <div class="card-body" style="background-color: #fff; padding: 20px;">
-                    <a href="<?php echo _WEB_ROOT ?>/admin/addUsers" class="btn btn-primary">Thêm nhân viên</a>
-                    <a href="<?php echo _WEB_ROOT ?>/admin/listStaffDelete" class="float-right text-dark"
-                        style="position: relative; margin-right: 20px;">
-                        <i class="fa-solid fa-trash-can" style="font-size: 25px;"></i>
-                        <span
-                            style="font-size:12px; border-radius: 50%; padding: 0px 6px; position: absolute; top: -10px; "
-                            class="text-light bg-danger count_delete">
-                            <?php echo count($listStaffDelete); ?>
-                        </span>
-                    </a>
-
+            <a class="btn btn-primary" href="<?php echo _WEB_ROOT ?>/admin/listUsersStaff">Danh sách nhân viên</a>
+                    
                     <div class="table-responsive p-3">
                         <table class="table  table table-striped table-hover" id="dataTable">
                             <thead>
@@ -43,7 +31,9 @@ require './app/Views/inc/HeaderAdmin.php';
                                 <?php
                                 $i = 0;
                                 $data_index = 0;
-                                foreach ($listStaff as $index => $staff) { ?>
+                                foreach ($listStaffDelete as $index => $staff) {  
+                                
+                                    ?>
                                     <tr>
                                         <td id="row<?php echo $staff['id_staff']; ?>"></td>
                                         <td>
@@ -57,13 +47,13 @@ require './app/Views/inc/HeaderAdmin.php';
                                         </td>
 
                                         <td>
-                                            <a href="<?php echo _WEB_ROOT ?>/admin/updateUser/<?php echo $staff['id_staff']  ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                            
                                             </button>
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
                                                 data-target="#DeleteStaff<?php echo $staff['id_staff'] ?>">
-                                                <i class="bi bi-trash3-fill"></i>
+                                                Xóa vĩnh viễn
                                             </button>
-
+                                            <a href="<?php echo _WEB_ROOT ?>/admin/restoreStaff/<?php echo $staff['id_staff'] ?>" class="btn btn-primary">Khôi phục</a>
                                             <div class="modal fade" id="DeleteStaff<?php echo $staff['id_staff'] ?>"
                                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                 aria-hidden="true" style="margin-top: 100px;">
@@ -193,25 +183,24 @@ require './app/Views/inc/FooterAdmin.php';
 <script>
     $(document).ready(function () {
 
-        <?php foreach ($listStaff as $index => $staff) { ?>
+        <?php foreach ($listStaffDelete as $index => $staff) { ?>
             var confirmDelete<?php echo $staff['id_staff']; ?> = "#confirmDelete<?php echo $staff['id_staff']; ?>";
-           
+            var id_staff_<?php echo $staff['id_staff']; ?> = <?php echo $staff['id_staff']; ?>;
         <?php } ?>
 
-        <?php foreach ($listStaff as $staff) { ?>
+        <?php foreach ($listStaffDelete as $staff) { ?>
             $(confirmDelete<?php echo $staff['id_staff']; ?>).on('click', function () {
-                var id_staff = <?php echo $staff['id_staff']; ?>;
+                var id_staff = id_staff_<?php echo $staff['id_staff']; ?>;
 
                 $.ajax({
-                    url: "<?php echo _WEB_ROOT ?>/admin/deleteUserStaff",
+                    url: "<?php echo _WEB_ROOT ?>/admin/DeleteStaffPermanent",
                     method: "POST",
                     data: {
                         id_staff: id_staff
                     },
                     success: function (data) {
-
                         console.log(data);
-                        alert('xóa nhân viên thành công');
+                        alert('xóa vĩnh viên nhân viên thành công');
 
                     }
                 })
@@ -232,8 +221,10 @@ require './app/Views/inc/FooterAdmin.php';
             var cell = table.rows[i].cells[0];
             cell.textContent = i;
         }
+
     }
 
+    
   
 
     window.onload = function () {

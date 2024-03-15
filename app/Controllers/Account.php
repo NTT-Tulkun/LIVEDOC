@@ -15,13 +15,13 @@ class Account extends Controller
 
     function login()
     {
-        if (isset($_POST['login'])) {
+        if (isset ($_POST['login'])) {
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['password'] = $this->checkPassword();
 
-            if ($this->data['error']['password'] == '' &&  $this->data['error']['email'] == '') {
-                $listPatient = $this->model->getListFromTowTables('patient', 'role', 'id_role', 'id_role');
-                $listStaff = $this->model->getListFromTowTables('staff', 'role', 'id_role', 'id_role');
+            if ($this->data['error']['password'] == '' && $this->data['error']['email'] == '') {
+                $listPatient = $this->model->getListFromTowTables('patient', 'role', 'id_role', 'id_role', 'WHERE status = 1');
+                $listStaff = $this->model->getListFromTowTables('staff', 'role', 'id_role', 'id_role', 'WHERE status = 1');
 
                 $checkAccount = false;
 
@@ -37,7 +37,7 @@ class Account extends Controller
                             $_SESSION['is_login']['experience'] = $user['experience'];
                             $_SESSION['is_login']['description'] = $user['description'];
                         }
-                        
+
                         $_SESSION['is_login']['fullname'] = $user['full_name'];
                         $_SESSION['is_login']['email'] = $user['email'];
                         $_SESSION['is_login']['phone'] = $user['phone'];
@@ -62,6 +62,7 @@ class Account extends Controller
             }
         }
 
+
         $this->view("Account/Login", $this->data);
     }
 
@@ -69,7 +70,10 @@ class Account extends Controller
 
     function register()
     {
-        if (isset($_POST['register'])) {
+        if (isset ($_POST['register'])) {
+
+
+
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['password'] = $this->checkPassword();
             $this->data['error']['confirm_password'] = $this->confirmPassword();
@@ -77,30 +81,30 @@ class Account extends Controller
             $this->data['error']['phone'] = $this->checkPhone();
             $this->data['error']['birthday'] = $this->checkBorn();
             $this->data['error']['gender'] = $this->checkGender();
-           
-            $listUserPatient =   $this->model->getListTable('patient');
-            $listStaff =   $this->model->getListTable('staff');
 
-            foreach(array_merge($listUserPatient, $listStaff)as $user){
-                if($user['email']==$_POST['email']){
+            $listUserPatient = $this->model->getListTable('patient');
+            $listStaff = $this->model->getListTable('staff');
+
+            foreach (array_merge($listUserPatient, $listStaff) as $user) {
+                if ($user['email'] == $_POST['email']) {
                     $this->data['error']['email'] = 'Email đã được sử dụng';
                 }
-                if($user['phone']==$_POST['phone']){
+                if ($user['phone'] == $_POST['phone']) {
                     $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
                 }
             }
-            if($_POST['password']!=$_POST['confirm_password']){
+            if ($_POST['password'] != $_POST['confirm_password']) {
                 $this->data['error']['confirm_password'] = 'Mật khẩu bạn nhập lại không khớp';
             }
-            
+
             foreach ($this->data['error'] as $key => $value) {
-                if ($value === '') {
+                if ($value == '') {
                     unset($this->data['error'][$key]);
                 }
             }
 
-           
-            if(empty($this->data['error'])){
+
+            if (empty ($this->data['error'])) {
                 $fullname = $_POST['fullname'];
                 $email = $_POST['email'];
                 $phone = $_POST['phone'];
@@ -116,23 +120,74 @@ class Account extends Controller
                     'birthday' => $birthday,
                     'gender' => $gender,
                     'id_role' => $id_role,
+
                 ];
-              $result =  $this->model->InsertData('patient',$data);
-              if($result){
-                echo "<script>alert('Bạn đã đăng kí thành công tài khoản')</script>";
-                
-                $redirectUrl = _WEB_ROOT . "/account/login";
-                header("refresh:0.5; url=$redirectUrl");
-              }
+                $result = $this->model->InsertData('patient', $data);
+                if ($result) {
+
+                    $this->data['email'] = $_POST['email'];
+                    $this->data['fullname'] = $_POST['fullname'];
+
+                    $this->view("Account/sendMailRegister", $this->data);
+                    echo "<script>alert('Bạn đã đăng kí thành công tài khoản')</script>";
+
+                    $redirectUrl = _WEB_ROOT . "/account/notifyRegister";
+                    header("refresh:0.5; url=$redirectUrl");
+                }
             }
         }
+
+
         $this->view("Account/Register", $this->data);
-       
+
+    }
+
+
+    function confirmUser($email = '')
+    {
+        if (isset ($email)) {
+            $email = base64_decode($email);
+
+            $updates = [
+                'status' => 1
+            ];
+            $this->model->updateData('patient', $updates, "email = '$email' ");
+            $redirectUrl = _WEB_ROOT . "/account/login";
+            header("refresh:0; url=$redirectUrl");
+        }
+
+
+
     }
 
     function ForgotPassword()
     {
-        $this->view("Account/ForgotPassword");
+        if (isset ($_POST['sub_email'])) {
+            $this->data['error']['email'] = $this->checkEmail();
+
+            $listPatient = $this->model->getListTable('patient');
+            $listStaff = $this->model->getListTable('staff');
+            $checkEmail = false;
+            foreach (array_merge($listPatient, $listStaff) as $user) {
+                if ($user['email'] == $_POST['email']) {
+                    $checkEmail = true;
+                    $this->data['email'] = $_POST['email'];
+
+                    $this->view("Account/sendMailForgotPassword", $this->data);
+                    $redirectUrl = _WEB_ROOT . "/account/NotifyForgotPassword";
+                    header("refresh:0; url=$redirectUrl");
+                }
+
+            }
+
+            if ($checkEmail == false) {
+                $this->data['error']['email'] = "Email không tồn tại";
+
+            }
+
+        }
+        $this->view("Account/ForgotPassword", $this->data);
+
     }
 
 
@@ -142,11 +197,102 @@ class Account extends Controller
         $this->view("Home/Home");
     }
 
+    function notifyRegister()
+    {
+
+        $this->view("Account/NotifyRegister");
+    }
+
+    function NotifyForgotPassword()
+    {
+
+        $this->view("Account/NotifyForgotPassword");
+    }
+
+    function newPassword($email)
+    {
+        if (isset ($email)) {
+            $email = base64_decode($email);
+
+            $listPatient = $this->model->getListTable('patient', 'where status = 1');
+            $listStaff = $this->model->getListTable('staff', 'where status = 1');
+            $checkEmail = '';
+            if (isset ($_POST['new_password'])) {
+
+                $this->data['error']['password'] = $this->checkPassword();
+                $this->data['error']['confirm_password'] = $this->confirmPassword();
+
+
+                foreach ($this->data['error'] as $key => $value) {
+                    if ($value == '') {
+                        unset($this->data['error'][$key]);
+                    }
+                }
+
+                if (empty ($this->data['error'])) {
+                    if ($_POST['password'] == $_POST['confirm_password']) {
+                        foreach ($listPatient as $patient) {
+                            if ($patient['email'] == $email) {
+                                $checkEmail = 'patient';
+
+                            }
+                        }
+                        foreach ($listStaff as $staff) {
+                            if ($staff['email'] == $email) {
+                                $checkEmail = 'staff';
+
+                            }
+                        }
+
+                        if ($checkEmail == 'patient') {
+                            $data = [
+                                'password' => md5($_POST['confirm_password'])
+                            ];
+
+                            $result = $this->model->updateData('patient', $data, "email = '$email' ");
+                            if ($result) {
+                                echo "<script>alert('Tạo mật khẩu thành công')</script>";
+                                $redirectUrl = _WEB_ROOT . "/account/login";
+                                header("refresh:0; url=$redirectUrl");
+
+                            } else {
+                                echo "<script>alert('Tạo mật khẩu thất bại')</script>";
+
+                            }
+                        } else {
+                            $data = [
+                                'password' => md5($_POST['confirm_password'])
+                            ];
+                            $result = $this->model->updateData('staff', $data, "email = '$email' ");
+                            if ($result) {
+                                echo "<script>alert('Tạo mật khẩu thành công')</script>";
+                                $redirectUrl = _WEB_ROOT . "/account/login";
+                                header("refresh:0; url=$redirectUrl");
+
+                            } else {
+                                echo "<script>alert('Tạo mật khẩu thất bại')</script>";
+
+                            }
+                        }
+
+                    } else {
+                        $this->data['error']['confirm_password'] = 'Mật khẩu không khớp';
+                    }
+                }
+
+
+            }
+            $this->view("Account/NewPassword", $this->data);
+        }
+
+    }
+
     function main()
     {
         echo "hello";
     }
-    function test($a, $b ,$c){
+    function test($a, $b, $c)
+    {
         echo '123';
         echo $a;
         echo $b;

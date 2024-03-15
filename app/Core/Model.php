@@ -12,7 +12,7 @@ class Model extends Database
         $this->connect =  $p->connect();
     }
 
-    public function getListTable($tableName, $condition = '')
+    public function getListTable($tableName, $condition='')
     {
         $query = "SELECT * FROM $tableName $condition";
         $result = mysqli_query($this->connect, $query);
