@@ -256,15 +256,14 @@ class Validate
 
     function checkDepartment()
     {
-
-        // if ($_POST['role'] == 4) {
-        //     if ($_POST["department"] == 0) {
-        //         $this->error['department'] = "Vui lòng chọn chuyên khoa cho bác sĩ!";
-        //         return $this->error['department'];
-        //     }
-        // } else {
-        //     return '';
-        // }
+        if ($_POST['role'] == 4) {
+            if ($_POST["department"] == 0) {
+                $this->error['department'] = "Vui lòng chọn chuyên khoa cho bác sĩ!";
+                return $this->error['department'];
+            }
+        } else {
+            return '';
+        }
 
     }
 
