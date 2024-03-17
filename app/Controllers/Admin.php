@@ -206,6 +206,8 @@ class Admin extends Controller
                 ];
                 if ($_POST['role'] == 4) {
                     $data['id_department'] = $_POST['department'];
+                }else{
+                    $data['id_department'] = 7;
                 }
                 $result = $this->model->InsertData('staff', $data);
                 if ($result) {
@@ -279,6 +281,63 @@ class Admin extends Controller
         $this->data['department'] = $this->model->getListTable('department');
         $listUserPatient = $this->model->getListTable('patient');
         $listStaff = $this->model->getListTable('staff');
+
+        if (isset ($_POST['upDate'])) {
+            $this->data['error']['fullname'] = $this->checkFullName();
+            $this->data['error']['email'] = $this->checkEmail();
+            $this->data['error']['gender'] = $this->checkGender();
+            $this->data['error']['phone'] = $this->checkPhone();
+            $this->data['error']['birthday'] = $this->checkBorn();
+            $this->data['error']['certificate'] = $this->checkCertificate();
+            $this->data['error']['experience'] = $this->checkExperience();
+            $this->data['error']['description'] = $this->checkDescription();
+            $this->data['error']['role'] = $this->checkRole();
+            $this->data['error']['department'] = $this->checkDepartment();
+
+            foreach (array_merge($listUserPatient, $listStaff) as $user) {
+                if ($user['email'] == $_POST['email'] && $_POST['id_staff'] != $user['id_staff']) {
+                    $this->data['error']['email'] = 'Email đã được sử dụng';
+                }
+                if ($user['phone'] == $_POST['phone'] && $_POST['id_staff'] != $user['id_staff']) {
+                    $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
+                }
+            }
+
+            foreach ($this->data['error'] as $key => $value) {
+                if ($value == '') {
+                    unset($this->data['error'][$key]);
+                }
+            }
+
+            if (empty ($this->data['error'])) {
+                $data = [
+                    'full_name' => $_POST['fullname'],
+                    'email' => $_POST['email'],
+                    'phone' => $_POST['phone'],
+                    'birthday' => $_POST['birthday'],
+                    'gender' => $_POST['gender'],
+                    'id_role' => $_POST['role'],
+                    'certificate' => $_POST['certificate'],
+                    'description' => $_POST['description'],
+                    'experience' => $_POST['experience'],
+                ];
+                $id_staff = $_POST['id_staff'];
+                if ($_POST['role'] == 4) {
+                    $data['id_department'] = $_POST['department'];
+                }else{
+                    $data['id_department'] = 7;
+                }
+                $result = $this->model->UpdateData('staff', $data, "id_staff = $id_staff");
+                if ($result) {
+                    echo "<script>alert('Bạn đã cập nhật thành công thông tin tài khoản')</script>";
+                    $redirectUrl = _WEB_ROOT . "/admin/ListUsersStaff";
+                    header("refresh:0.5; url=$redirectUrl");
+                    exit();
+                }
+            }
+
+        }
+
         $this->view("Admin/Users/UpdateUser", $this->data);
 
     }

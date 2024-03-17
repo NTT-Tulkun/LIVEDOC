@@ -34,7 +34,7 @@ try {
 
     //Recipients
     $mail->setFrom('minhhuan190102@gmail.com', 'LIVEDOC');
-    $mail->addAddress("minhhuan190102@gmail.com", "minhhuan190102@gmail.com");     //Add a recipient // người nhận
+    $mail->addAddress("$email", "$email");
 
     $mail->addReplyTo('minhhuan190102@gmail.com', 'LIVEDOC');
   
@@ -71,17 +71,49 @@ try {
           background-color: #fff;
         }
         .card-header {
-          background-color: #007bff;
+          background-color: #9fd7ec;
           color: #fff;
           text-align: center;
-          padding: 10px;
+          padding: 5px;
           border-top-left-radius: 5px;
           border-top-right-radius: 5px;
         }
+
+        .card-header h4{
+          color: #3883ce;
+        }
+
         .card-body {
+          background-color: #b2dded;
           text-align: center;
           padding: 20px;
         }
+
+        .card-body a,p{
+          padding-bottom: 10px;
+        }
+        .card-footer {
+          background-color: #9fd7ec;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center; 
+        }
+
+
+        .logo-container img {
+            width: 40%;
+            margin-right: -10px;
+            height: auto; 
+            display: block; 
+        }
+
+        h6 {
+            margin: 0; 
+            margin-right: 0;
+            text-align: center;
+        }
+
         .btn {
           display: inline-block;
           background-color: #dc3545;
@@ -99,19 +131,26 @@ try {
     <body>
       <div class='container'>
         <div class='card'>
-          <div class='card-header'>
-            <h6>Xác nhận tài khoản đã đăng ký</h6>
-          </div>
-          <div class='card-body'>
-           <h5>LIVEDOC<h5>
-            <p class='mb-4'>Vui lòng nhấn vào nút dưới đây để xác nhận email của bạn:</p>
-            <a class='btn' href='$confirmUser'>Xác nhận email</a>
-          </div>
+            <div class='card-header'>
+                <h4>LIVEDOC</h4>
+              </div>
+              <div class='card-body'>
+                <p class='mb-2'>Chúc mừng bạn vừa đăng ký thành công tài khoản</p>
+                <p class='mb-2'>Vui lòng nhấn vào xác nhận bên dưới để kích hoạt tài khoản:</p>
+                <a class='btn' href='$confirmUser' style='color: #fff;'>Xác nhận</a>
+              </div>
+              <div class='card-footer'>
+                    <div class='logo-container'>
+                        <img alt='' src='https://admin.medinet.gov.vn//UploadImages/Config/soytehcm/logofooter_2311_moi.png'>
+                    </div>
+                    <div class='copyright-container'>
+                        <h6>Copyright © 2024 by Công ty CP Bệnh Viện Đa khoa LIVEDOC. All rights reserved</h6>
+                    </div>
+            </div>                            
         </div>
       </div>
     </body>
     </html>
-    
     ";
 
 
