@@ -8,7 +8,7 @@ class Validate
 
     function checkBorn()
     {
-        if (empty($_POST["birthday"])) {
+        if (empty ($_POST["birthday"])) {
             $this->error['birthday'] = "Vui lòng nhập ngày sinh !";
             return $this->error['birthday'];
         } else {
@@ -25,7 +25,7 @@ class Validate
 
     function checkFullName()
     {
-        if (empty($_POST["fullname"])) {
+        if (empty ($_POST["fullname"])) {
             $this->error['fullname'] = "Vui lòng nhập họ tên!";
             return $this->error['fullname'];
         } else {
@@ -42,7 +42,7 @@ class Validate
 
     function checkPhone()
     {
-        if (empty($_POST["phone"])) {
+        if (empty ($_POST["phone"])) {
             $this->error['phone'] = "Vui lòng nhập số điện thoại !";
             return $this->error['phone'];
         } else {
@@ -58,7 +58,7 @@ class Validate
 
     function checkEmail()
     {
-        if (empty($_POST["email"])) {
+        if (empty ($_POST["email"])) {
             $this->error['email'] = " Vui lòng nhập Email !";
             return $this->error['email'];
         } else {
@@ -73,7 +73,7 @@ class Validate
 
     function checkPassword()
     {
-        if (empty($_POST["password"])) {
+        if (empty ($_POST["password"])) {
             $this->error['password'] = " Vui lòng nhập mật khẩu !";
             return $this->error['password'];
         } else {
@@ -88,7 +88,7 @@ class Validate
 
     function confirmPassword()
     {
-        if (empty($_POST["confirm_password"])) {
+        if (empty ($_POST["confirm_password"])) {
             $this->error['confirm_password'] = " Vui lòng nhập lại mật khẩu !";
             return $this->error['confirm_password'];
         } else {
@@ -105,7 +105,7 @@ class Validate
 
     function checkGender()
     {
-        if (empty($_POST["gender"])) {
+        if (empty ($_POST["gender"])) {
             $this->error['gender'] = " Vui lòng chọn giới tính !";
             return $this->error['gender'];
         } else {
@@ -115,7 +115,7 @@ class Validate
 
     function checkNameMedicine()
     {
-        if (empty($_POST["nameMedicine"])) {
+        if (empty ($_POST["nameMedicine"])) {
             $this->error['nameMedicine'] = "Vui lòng nhập tên thuốc!";
             return $this->error['nameMedicine'];
         } else {
@@ -126,7 +126,7 @@ class Validate
 
     function checkTypeMedicine()
     {
-        if (empty($_POST['typeMedicine'])) {
+        if (empty ($_POST['typeMedicine'])) {
             if ($_POST["typeMedicine"] == 0) {
                 $this->error['typeMedicine'] = "Vui lòng chọn loại thuốc!";
                 return $this->error['typeMedicine'];
@@ -138,7 +138,7 @@ class Validate
 
     function checkQuantityMedicine()
     {
-        if (empty($_POST['quantity'])) {
+        if (empty ($_POST['quantity'])) {
 
             $this->error['quantity'] = " Vui lòng nhập số lượng !";
             return $this->error['quantity'];
@@ -154,7 +154,7 @@ class Validate
 
     function checkManufMedicine()
     {
-        if (empty($_POST["manufacture"])) {
+        if (empty ($_POST["manufacture"])) {
             $this->error['manufacture'] = "Vui lòng chọn ngày sản xuất của thuốc !";
             return $this->error['manufacture'];
         } else {
@@ -171,7 +171,7 @@ class Validate
 
     function checkExpiryMedicine()
     {
-        if (empty($_POST["expiry"])) {
+        if (empty ($_POST["expiry"])) {
             $this->error['expiry'] = "Vui lòng chọn hạn sử dụng cho thuốc !";
             return $this->error['expiry'];
         } else {
@@ -188,7 +188,7 @@ class Validate
 
     function checkPriceMedicine()
     {
-        if (empty($_POST['price'])) {
+        if (empty ($_POST['price'])) {
 
             $this->error['price'] = " Vui lòng nhập giá cho thuốc!";
             return $this->error['price'];
@@ -204,7 +204,7 @@ class Validate
 
     function checkUnitMedicine()
     {
-        if (empty($_POST['unit'])) {
+        if (empty ($_POST['unit'])) {
             if ($_POST["unit"] == 0) {
                 $this->error['unit'] = "Vui lòng chọn đơn vị thuốc!";
                 return $this->error['unit'];
@@ -216,7 +216,7 @@ class Validate
 
     function checkCertificate()
     {
-        if (empty($_POST["certificate"])) {
+        if (empty ($_POST["certificate"])) {
             $this->error['certificate'] = "Vui lòng cung cấp chứng chỉ cần thiết!";
             return $this->error['certificate'];
         } else {
@@ -226,7 +226,7 @@ class Validate
 
     function checkExperience()
     {
-        if (empty($_POST["experience"])) {
+        if (empty ($_POST["experience"])) {
             $this->error['experience'] = "Vui lòng chứng chỉ bằng cấp cần thiết!";
             return $this->error['experience'];
         } else {
@@ -236,7 +236,7 @@ class Validate
 
     function checkDescription()
     {
-        if (empty($_POST["description"])) {
+        if (empty ($_POST["description"])) {
             $this->error['description'] = "Vui lòng nhập mô tả!";
             return $this->error['description'];
         } else {
@@ -246,7 +246,7 @@ class Validate
 
     function checkRole()
     {
-        if (empty($_POST["role"])) {
+        if (empty ($_POST["role"])) {
             $this->error['role'] = "Vui lòng chọn vai trò người dùng!";
             return $this->error['role'];
         } else {
@@ -257,15 +257,27 @@ class Validate
     function checkDepartment()
     {
 
-        // if ($_POST['role'] == 4) {
-        //     if ($_POST["department"] == 0) {
-        //         $this->error['department'] = "Vui lòng chọn chuyên khoa cho bác sĩ!";
-        //         return $this->error['department'];
-        //     }
-        // } else {
-        //     return '';
-        // }
+        if ($_POST["department"] == 0) {
+            $this->error['department'] = "Vui lòng chọn chuyên khoa cho bác sĩ!";
+            return $this->error['department'];
+        } else {
+            return '';
+        }
 
     }
+
+    function checkDoctor()
+    {
+        if ($_POST["department"] != 0) {
+            if ($_POST["doctor"] == 0) {
+                $this->error['doctor'] = "Vui lòng chọn một bác sĩ!";
+                return $this->error['doctor'];
+            } else {
+                return '';
+            }
+        }
+    }
+
+
 
 }

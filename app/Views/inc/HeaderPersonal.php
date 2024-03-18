@@ -30,7 +30,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo  _WEB_ROOT; ?>/public/img/favicons/favicon.ico">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="manifest" href="<?php echo  _WEB_ROOT; ?>/public/img/favicons/manifest.json">
-
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
   <link href="<?php echo  _WEB_ROOT; ?>/public/css/theme.css" rel="stylesheet" />
 

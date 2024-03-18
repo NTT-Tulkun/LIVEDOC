@@ -253,3 +253,7 @@ require './app/Views/inc/FooterAdmin.php';
 
 
 </script>
+<?php
+
+echo "<pre>";
+print_r($listStaff);

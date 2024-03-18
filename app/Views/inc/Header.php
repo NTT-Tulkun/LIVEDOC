@@ -17,6 +17,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon-16x16.png">
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon.ico">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
   <link rel="manifest" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/manifest.json">
   <meta name="msapplication-TileImage" content="<?php echo _WEB_ROOT; ?>/public/img/favicons/mstile-150x150.png">
   <meta name="theme-color" content="#ffffff">
