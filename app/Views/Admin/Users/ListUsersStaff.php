@@ -1,6 +1,5 @@
 <?php
 require './app/Views/inc/HeaderAdmin.php';
-
 ?>
 <div class="section__content section__content--p30">
 

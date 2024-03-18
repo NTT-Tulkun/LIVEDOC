@@ -110,5 +110,4 @@ require './app/Views/inc/HeaderAdmin.php';
 
     <?php
     require './app/Views/inc/FooterAdmin.php';
-    print_r($Medicine);
     ?>

@@ -1,6 +1,5 @@
     <?php
     require './app/Views/inc/HeaderAdmin.php';
-
     ?>
     <div class="section__content section__content--p30">
       <h4 class="text-center"><?php echo $title; ?></h4>
@@ -123,7 +122,7 @@
               <label for=""><b>Phân quyền cho người dùng:</b></label>
             </div>
 
-            <?php foreach ($role as $item) {
+            <?php foreach($role as $item) {
               if ($item['id_role'] != 5) {
             ?>
                 <div class="col-md-2 m-3">
@@ -140,9 +139,11 @@
             <div id="department" style="display: none;">
               <select name="department" class="form-select" id="depmt">
                 <option value="0">Chọn phòng ban cho bác sĩ....</option>
-                <?php foreach ($department as $item) { ?>
+                <?php foreach ($department as $item) { 
+                if($item['id_department']!=7){  
+                ?>
                   <option value="<?php echo $item['id_department'] ?>"><?php echo $item['department_name'] ?></option>
-                <?php } ?>
+                <?php }} ?>
               </select>
              
             </div>
