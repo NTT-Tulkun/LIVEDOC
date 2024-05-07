@@ -56,7 +56,8 @@ require './app/Views/inc/HeaderAdmin.php';
                                         </td>
 
                                         <td>
-                                            <a href="<?php echo _WEB_ROOT ?>/admin/updateUser/<?php echo $staff['id_staff']  ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="<?php echo _WEB_ROOT ?>/admin/updateUser/<?php echo $staff['id_staff'] ?>"
+                                                class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                                             </button>
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
                                                 data-target="#DeleteStaff<?php echo $staff['id_staff'] ?>">
@@ -194,7 +195,7 @@ require './app/Views/inc/FooterAdmin.php';
 
         <?php foreach ($listStaff as $index => $staff) { ?>
             var confirmDelete<?php echo $staff['id_staff']; ?> = "#confirmDelete<?php echo $staff['id_staff']; ?>";
-           
+
         <?php } ?>
 
         <?php foreach ($listStaff as $staff) { ?>
@@ -223,7 +224,7 @@ require './app/Views/inc/FooterAdmin.php';
 <script>
     function addRowNumbers() {
         var table = document.getElementById("dataTable");
-       
+
 
         var rows = table.rows.length;
 
@@ -233,7 +234,7 @@ require './app/Views/inc/FooterAdmin.php';
         }
     }
 
-  
+
 
     window.onload = function () {
         addRowNumbers();
@@ -252,7 +253,3 @@ require './app/Views/inc/FooterAdmin.php';
 
 
 </script>
-<?php
-
-echo "<pre>";
-print_r($listStaff);

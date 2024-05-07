@@ -35,11 +35,9 @@ class App
                 $this->controller = new $this->controller();
                 unset($urlArray[0]);
             } else {
-                echo "err1";
                 $this->loadError();
             }
         } else {
-            echo "err2";
             $this->loadError();
         }
 
@@ -65,10 +63,7 @@ class App
         if (method_exists($this->controller, $this->action)) {
             // Tên controler, tên hàm muốn chạy là ai, tham số dùng để chạy
             call_user_func_array([$this->controller, $this->action], $this->params);
-        } else {
-            echo "err3";
-            $this->loadError();
-        }
+        } 
     }
 
 

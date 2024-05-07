@@ -44,7 +44,11 @@ function build_calendar($month, $year)
 
         // Tạo ô cho ngày hiện tại
         $date = strtotime("$year-$month-$currentDay");
-        $class = ($date < $currentDate) ? 'text-light pe-none' : 'text-primary';
+        $class = ($date <= $currentDate) ? 'text-light pe-none' : 'text-primary';
+        $isWeekend = ($dayOfWeek == 5 || $dayOfWeek == 6); // Kiểm tra xem ngày đó có phải là thứ Bảy hoặc Chủ Nhật không
+        if ($isWeekend) {
+            $class = 'text-light pe-none'; // Nếu là thứ Bảy hoặc Chủ Nhật, đặt lớp cho chữ là text-light và không thể chọn được
+        }
         if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) {
             if ($_GET['day'] == $currentDay) {
                 $calendar .= '<td class="text-center bg-success"><a class="' . $class . '" href="?day=' . $currentDay . '&month=' . $month . '&year=' . $year . '">' . $currentDay . '</a></td>';

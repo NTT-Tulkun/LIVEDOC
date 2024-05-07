@@ -17,10 +17,49 @@ class Admin extends Controller
         $this->view("Admin/Home", $this->data);
     }
 
-    public function message()
+    public function message($id_patient = 0)
     {
+        $this->data['message'] = $this->model->getListUserMessage();
+        $this->data['messagePatient'] = $this->model->getListFromTowTables('message', 'patient', 'id_patient', 'id_patient', "WHERE message.id_patient = $id_patient");
+        $this->data['patient'] = $this->model->getListTable('patient', "WHERE id_patient = $id_patient");
+        $this->data['id_patient'] = $id_patient;
         $this->data['title'] = 'Phản hồi';
-        $this->view("Admin/Message", $this->data);
+
+        $this->view("Admin/mes2", $this->data);
+    }
+
+    public function Postmessage($id_patient)
+    {
+        if (isset($_POST['content'])) {
+            $data = [
+                'id_patient' => $id_patient,
+                'id_staff' => $_SESSION['is_login']['id_account'],
+                'id_sender' => $_SESSION['is_login']['id_account'],
+                'content' => $_POST['content'],
+                'send_date' => date("Y-m-d H:i:s"),
+
+            ];
+
+            $this->model->InsertData('message', $data);
+
+            $content = $_POST;
+            require_once "./Library/Pusher/vendor/autoload.php";
+
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher\Pusher(
+                'c83bb20ad7db10fd6cd6',
+                '64998ac54bec60fd1c81',
+                '1798222',
+                $options
+            );
+
+            $data['message'] = $content;
+            $pusher->trigger('my-channel', 'my-event', $data);
+        }
+        $this->view("Admin/mes2", $this->data);
     }
 
     public function listMedicine()
@@ -35,7 +74,7 @@ class Admin extends Controller
         $this->data['title'] = 'Thêm thuốc mới';
         $this->data['listTypeMedicine'] = $this->model->getListTable('type_medicine');
 
-        if (isset ($_POST['addMedicine'])) {
+        if (isset($_POST['addMedicine'])) {
             $this->data['error']['nameMedicine'] = $this->checkNameMedicine();
             $this->data['error']['typeMedicine'] = $this->checkTypeMedicine();
             $this->data['error']['quantity'] = $this->checkQuantityMedicine();
@@ -59,7 +98,7 @@ class Admin extends Controller
                 $this->data['error'] = array();
             }
 
-            if (empty ($this->data['error'])) {
+            if (empty($this->data['error'])) {
                 // Thêm dữ liệu vào cơ sở dữ liệu
                 $data = [
                     'name_medicine' => $_POST['nameMedicine'],
@@ -85,7 +124,7 @@ class Admin extends Controller
 
     public function deleteMedicine()
     {
-        if (isset ($_POST['id_medicine'])) {
+        if (isset($_POST['id_medicine'])) {
             echo $_POST['id_medicine'];
             $id_medicine = $_POST['id_medicine'];
             $this->model->DeleteData("medicine", "WHERE id_medicine = $id_medicine");
@@ -99,7 +138,7 @@ class Admin extends Controller
         $this->data['Medicine'] = $this->model->getListFromTowTables('medicine', 'type_medicine', 'id_type_medicine', 'id_type_medicine', "Where medicine.id_medicine = $id_medicine");
         $this->data['TypeMedicine'] = $this->model->getListTable('type_medicine');
         $this->data['title'] = 'Cập nhật thuốc';
-        if (isset ($_POST['updateMedicine'])) {
+        if (isset($_POST['updateMedicine'])) {
             $this->data['error']['nameMedicine'] = $this->checkNameMedicine();
             $this->data['error']['typeMedicine'] = $this->checkTypeMedicine();
             $this->data['error']['quantity'] = $this->checkQuantityMedicine();
@@ -123,7 +162,7 @@ class Admin extends Controller
                 $this->data['error'] = array();
             }
 
-            if (empty ($this->data['error'])) {
+            if (empty($this->data['error'])) {
                 $data = [
                     'name_medicine' => $_POST['nameMedicine'],
                     'quantity' => $_POST['quantity'],
@@ -160,7 +199,7 @@ class Admin extends Controller
         $listUserPatient = $this->model->getListTable('patient');
         $listStaff = $this->model->getListTable('staff');
 
-        if (isset ($_POST['addUser'])) {
+        if (isset($_POST['addUser'])) {
             $this->data['error']['fullname'] = $this->checkFullName();
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['gender'] = $this->checkGender();
@@ -187,7 +226,7 @@ class Admin extends Controller
                 }
             }
 
-            if (empty ($this->data['error'])) {
+            if (empty($this->data['error'])) {
                 $this->data['fullname'] = $_POST['fullname'];
                 $this->data['email'] = $_POST['email'];
                 $this->data['phone'] = $_POST['phone'];
@@ -206,7 +245,7 @@ class Admin extends Controller
                 ];
                 if ($_POST['role'] == 4) {
                     $data['id_department'] = $_POST['department'];
-                }else{
+                } else {
                     $data['id_department'] = 7;
                 }
                 $result = $this->model->InsertData('staff', $data);
@@ -247,22 +286,22 @@ class Admin extends Controller
     public function deleteUserStaff()
     {
 
-        if (isset ($_POST['id_staff'])) {
+        if (isset($_POST['id_staff'])) {
             $id_staff = $_POST['id_staff'];
 
             $updates = [
                 'status' => 0
             ];
-             $this->model->updateData('staff', $updates, "id_staff = $id_staff");
-             
-             
+            $this->model->updateData('staff', $updates, "id_staff = $id_staff");
+
+
         }
     }
 
     public function deleteUserPatient()
     {
 
-        if (isset ($_POST['id_patient'])) {
+        if (isset($_POST['id_patient'])) {
             $id_patient = $_POST['id_patient'];
 
             $updates = [
@@ -273,16 +312,17 @@ class Admin extends Controller
         }
     }
 
-    public function updateUser($id_staff){
+    public function updateUser($id_staff)
+    {
         $this->data['Staff'] = $this->model->getListFromThreeTables('role', 'staff', 'department', 'id_role', 'id_role', 'id_department', 'id_department', "WHERE  id_staff = $id_staff AND staff.status=1");
         $this->data['title'] = 'Cập nhật nhân viên';
-        
+
         $this->data['role'] = $this->model->getListTable('role');
         $this->data['department'] = $this->model->getListTable('department');
         $listUserPatient = $this->model->getListTable('patient');
         $listStaff = $this->model->getListTable('staff');
 
-        if (isset ($_POST['upDate'])) {
+        if (isset($_POST['upDate'])) {
             $this->data['error']['fullname'] = $this->checkFullName();
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['gender'] = $this->checkGender();
@@ -309,7 +349,7 @@ class Admin extends Controller
                 }
             }
 
-            if (empty ($this->data['error'])) {
+            if (empty($this->data['error'])) {
                 $data = [
                     'full_name' => $_POST['fullname'],
                     'email' => $_POST['email'],
@@ -324,7 +364,7 @@ class Admin extends Controller
                 $id_staff = $_POST['id_staff'];
                 if ($_POST['role'] == 4) {
                     $data['id_department'] = $_POST['department'];
-                }else{
+                } else {
                     $data['id_department'] = 7;
                 }
                 $result = $this->model->UpdateData('staff', $data, "id_staff = $id_staff");
@@ -346,7 +386,7 @@ class Admin extends Controller
 
     public function listStaffDelete()
     {
-        
+
         $this->data['listStaffDelete'] = $this->model->getListFromThreeTables('role', 'staff', 'department', 'id_role', 'id_role', 'id_department', 'id_department', 'WHERE staff.status=0');
         $this->data['title'] = 'Danh sách nhân viên đã xóa';
         $this->view("Admin/Users/ListStaffDelete", $this->data);
@@ -355,59 +395,61 @@ class Admin extends Controller
 
     public function listPatientDelete()
     {
-        
+
         $this->data['listPatientDelete'] = $this->model->getListFromTowTables('role', 'patient', 'id_role', 'id_role', 'WHERE patient.status=0');
         $this->data['title'] = 'Danh sách bệnh nhân đã xóa';
         $this->view("Admin/Users/ListPatientDelete", $this->data);
 
     }
 
-    public function restoreStaff($id_staff){
-       
+    public function restoreStaff($id_staff)
+    {
+
         if (isset($id_staff)) {
 
             $updates = [
                 'status' => 1
             ];
-          $result =  $this->model->updateData('staff', $updates, "id_staff = $id_staff");
-          if ($result) {
-            echo "<script>alert('Khôi phục tài khoản thành công')</script>";
-            $redirectUrl = _WEB_ROOT . "/admin/listStaffDelete";
-            header("refresh:0.5; url=$redirectUrl");
-          }
+            $result = $this->model->updateData('staff', $updates, "id_staff = $id_staff");
+            if ($result) {
+                echo "<script>alert('Khôi phục tài khoản thành công')</script>";
+                $redirectUrl = _WEB_ROOT . "/admin/listStaffDelete";
+                header("refresh:0.5; url=$redirectUrl");
+            }
         }
     }
-    public function restorePatient($id_patient){
-       
+    public function restorePatient($id_patient)
+    {
+
         if (isset($id_patient)) {
 
             $updates = [
                 'status' => 1
             ];
-          $result =  $this->model->updateData('patient', $updates, "id_patient = $id_patient");
-          if ($result) {
-            echo "<script>alert('Khôi phục tài khoản thành công')</script>";
-            $redirectUrl = _WEB_ROOT . "/admin/listPatientDelete";
-            header("refresh:0.5; url=$redirectUrl");
-          }
+            $result = $this->model->updateData('patient', $updates, "id_patient = $id_patient");
+            if ($result) {
+                echo "<script>alert('Khôi phục tài khoản thành công')</script>";
+                $redirectUrl = _WEB_ROOT . "/admin/listPatientDelete";
+                header("refresh:0.5; url=$redirectUrl");
+            }
         }
     }
     public function DeleteStaffPermanent()
     {
-        if (isset ($_POST['id_staff'])) {
+        if (isset($_POST['id_staff'])) {
             $id_staff = $_POST['id_staff'];
 
-            $this->model->DeleteData('staff',"WHERE id_staff = $id_staff");
+            $this->model->DeleteData('staff', "WHERE id_staff = $id_staff");
 
         }
     }
 
     public function DeletePatientPermanent()
     {
-        if (isset ($_POST['id_patient'])) {
+        if (isset($_POST['id_patient'])) {
             $id_patient = $_POST['id_patient'];
 
-            $this->model->DeleteData('patient',"WHERE id_patient = $id_patient");
+            $this->model->DeleteData('patient', "WHERE id_patient = $id_patient");
 
         }
     }
@@ -430,7 +472,7 @@ class Admin extends Controller
         $i = 1;
 
         foreach ($data as $key => $value) {
-            if (!empty ($value)) {
+            if (!empty($value)) {
                 if (strpos($key, 'addContent') === 0) {
                     $posts['con'][$i]['content'] = htmlspecialchars('<p class=\"mb-1 textContent\">' . $value . '</p>');
                     $posts['con'][$i]['number'] = $i;

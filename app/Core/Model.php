@@ -9,10 +9,11 @@ class Model extends Database
     public function __construct()
     {
         $p = new Database();
-        $this->connect =  $p->connect();
+        $this->connect = $p->connect();
+
     }
 
-    public function getListTable($tableName, $condition='')
+    public function getListTable($tableName, $condition = '')
     {
         $query = "SELECT * FROM $tableName $condition";
         $result = mysqli_query($this->connect, $query);
@@ -25,7 +26,7 @@ class Model extends Database
         return $data;
     }
 
-    public function getListFromTowTables($tableName1, $tableName2, $columnName1, $columnName2,  $condition = '')
+    public function getListFromTowTables($tableName1, $tableName2, $columnName1, $columnName2, $condition = '')
     {
         $query = "SELECT * FROM $tableName1 
         INNER JOIN $tableName2 ON $tableName1.$columnName1 = $tableName2.$columnName2 $condition";
@@ -39,7 +40,7 @@ class Model extends Database
         return $data;
     }
 
-    
+
 
     public function getListFromThreeTables($tableName1, $tableName2, $tableName3, $columnName1, $columnName2, $columnName3, $columnName4, $condition = '')
     {
@@ -80,12 +81,11 @@ class Model extends Database
             $setUpdate[] = "`$column` = '$value'";
         }
         $set = implode(", ", $setUpdate);
-        
-        $updateQuery = "UPDATE `$tableName` SET $set WHERE $conditions;";
-        
-        $result = mysqli_query($this->connect, $updateQuery);
-        
+
+        $update = "UPDATE `$tableName` SET $set WHERE $conditions;";
+
+        $result = mysqli_query($this->connect, $update);
         return $result;
     }
-    
+
 }

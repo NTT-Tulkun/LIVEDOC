@@ -25,7 +25,7 @@ if (isset ($_POST['doctor'])) {
         <?php require 'Calendar.php'; ?>
       </div>
       <div class="col-lg-6 z-index-2" style="margin-top:70px;">
-        <form class="row g-3" action="<?php echo _WEB_ROOT ?>/home/book" method="POST">
+        <form class="row g-3" action="<?php echo _WEB_ROOT ?>/home/appointmentDetail" method="POST">
 
 
           <input type="hidden" name="department" value="<?php echo $_SESSION['appointment']['department'] ?>">
@@ -53,13 +53,15 @@ if (isset ($_POST['doctor'])) {
               ?>
             </p>
           </div>
+      
           <div class="col-md-5">
-
+        
             <div class="col-md-12 row ">
               <?php if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) {
 
                 ?>
                 <table class="table">
+             
                   <tr>
                   <tr>
                     <?php
@@ -126,16 +128,19 @@ if (isset ($_POST['doctor'])) {
               <?php } ?>
             </div>
           </div>
+          <?php if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) { ?>
+
           <div class="col-sm-12 col-md-7 text-center">
 
-            <textarea name="problem" id="" cols="45" class="rounded border" rows="3"
+            <textarea id="" cols="45" class="rounded border" rows="3" name="describe_problem"
               placeholder=" Nhập vấn đề hiện tại của bạn..."></textarea>
 
             <div class="" style="margin-top: 5%; ">
-              <input type="submit" value="Đặt lịch" class="btn btn-primary rounded-pill" name="sub_appointment">
+              <input type="submit" value="Đặt lịch" class="btn btn-primary rounded-pill" name="appointmentDetail">
 
             </div>
           </div>
+          <?php } ?>
 
 
 

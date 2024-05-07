@@ -12,7 +12,7 @@ class Controller extends Validate{
         extract($data); //Đổi key mảng thành biến
         require_once "./app/Views/".$view.".php";
     }
-
+  
 
 }
 ?>

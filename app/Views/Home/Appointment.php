@@ -79,7 +79,7 @@ require './app/Views/inc/Header.php';
       <div class="col-lg-6 z-index-2"><img class="w-100"
           src="<?php echo _WEB_ROOT; ?>/public/img/gallery/appointment.png" alt="..." /></div>
       <div class="col-lg-6 z-index-2" style="margin-top:70px;">
-        <form class="row g-3" action="<?php echo _WEB_ROOT; ?>/Home/<?php echo $appointment ?>" method="POST">
+        <form class="row g-3" action="<?php echo _WEB_ROOT; ?>/Home/appointmentDetail" method="POST">
 
           <div class="col-md-12">
             <label class="form-label text-dark">Chọn phòng khám:</label>
