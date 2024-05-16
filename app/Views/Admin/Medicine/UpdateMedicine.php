@@ -9,8 +9,6 @@ require './app/Views/inc/HeaderAdmin.php';
 
         <div class="card-body" style="background-color: #fff; padding: 20px;">
 
-
-
             <form class="row g-3 m-3" action="" method="POST">
                 <div class="col-md-12 mb-1">
                     <label for="nameMedicine" class="form-label">Nhập tên thuốc:</label>
@@ -25,11 +23,18 @@ require './app/Views/inc/HeaderAdmin.php';
                 <div class="col-4 mb-1">
                     <label for="validationDefault04" class="form-label">Chọn loại thuốc:</label>
                     <select class="form-select" name="typeMedicine">
-                    <option value="<?php echo $Medicine[0]['id_type_medicine'] ?>"><?php echo $Medicine[0]['name_type_medicine'] ?></option>
+                  
                         <?php 
-                        foreach($TypeMedicine as $type){ ?>
-                        <option value="<?php echo $type['id_type_medicine'];?>"><?php echo $type['name_type_medicine'];?></option>
-                        <?php            
+                        foreach($TypeMedicine as $type){ 
+                          if($Medicine[0]['id_type_medicine'] == $type['id_type_medicine']){
+                        ?>
+                        <option selected value="<?php echo $type['id_type_medicine'];?>"><?php echo $type['name_type_medicine'];?></option>
+                        <?php   
+                        }else{
+                        ?>
+                        <option  value="<?php echo $type['id_type_medicine'];?>"><?php echo $type['name_type_medicine'];?></option>
+                        <?php
+                        }         
                         }
                         ?>
                     </select>
@@ -78,14 +83,19 @@ require './app/Views/inc/HeaderAdmin.php';
                 <div class="col-4 mb-3">
                     <label for="validationDefault02" class="form-label">Đơn vị:</label>
                     <select class="form-select" name="unit" >
-                        <option value="<?php echo $Medicine[0]['unit'] ?>"><?php echo $Medicine[0]['unit'] ?></option>
-                        <option value="Hộp">Hộp</option>
-                        <option value="Lọ">Lọ</option>
-                        <option value="Viên">Viên</option>
-                        <option value="Vỉ">Vỉ</option>
-                        <option value="Gói">Gói</option>
-                        <option value="Tuýt">Tuýt</option>
-                        <option value="Ống">Ống</option>
+                        <?php $array=['Hộp','Lọ','Viên','Vỉ','Gói','Tuýt','Ống'];
+                          foreach ($array as $key => $value) {
+                            if($value == $Medicine[0]['unit']){
+                        ?>
+                        <option value="<?php echo $value?>" selected><?php echo $value?></option>
+                        <?php
+                          }else{
+                        ?>
+                         <option value="<?php echo $value?>"><?php echo $value?></option>
+                        <?php
+                          }
+                          }
+                        ?>
                     </select>
                     <p class="text-danger mt-2"><b><?php
                                               if (!empty($error['unit'])) {
