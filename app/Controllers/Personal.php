@@ -16,12 +16,111 @@ class Personal extends Controller
 
     function index()
     {
-        $this->view("Personal/Profile");
+        $id_account = $_SESSION['is_login']['id_account'];
+
+        if (isset($_POST['btn_save'])) {
+            $this->data['error']['email'] = $this->checkEmail();
+            $this->data['error']['fullname'] = $this->checkFullName();
+            $this->data['error']['phone'] = $this->checkPhone();
+            $this->data['error']['birthday'] = $this->checkBorn();
+            $listUserPatient = $this->model->getListTable('patient', "WHERE id_patient != $id_account");
+            $listStaff = $this->model->getListTable('staff', "WHERE id_staff != $id_account");
+
+            foreach (array_merge($listUserPatient, $listStaff) as $user) {
+                if ($user['email'] == $_POST['email']) {
+                    $this->data['error']['email'] = 'Email đã được sử dụng';
+                }
+                if ($user['phone'] == $_POST['phone']) {
+                    $this->data['error']['phone'] = 'Số điện thoại đã được sử dụng';
+                }
+            }
+
+            foreach ($this->data['error'] as $key => $value) {
+                if ($value == '') {
+                    unset($this->data['error'][$key]);
+                }
+            }
+            if (empty($this->data['error'])) {
+                $fullname = $_POST['fullname'];
+                $email = $_POST['email'];
+                $phone = $_POST['phone'];
+                $birthday = $_POST['birthday'];
+
+
+                $dataUpdate = [
+                    'full_name' => "$fullname",
+                    'email' => "$email",
+                    'phone' => "$phone",
+                    'birthday' => $birthday,
+
+                ];
+
+                if (!empty($_FILES['file']['name'])) {
+                    $image = $_FILES['file']['name'];
+                    move_uploaded_file($_FILES['file']['tmp_name'], "public/img/users/" . $image);
+                    $dataUpdate['image'] = $image;
+                }
+
+                if ($_SESSION['is_login']['id_role'] == 5) {
+                    $result = $this->model->updateData('patient', $dataUpdate, "id_patient = $id_account");
+                } else {
+                    $result = $this->model->updateData('stafff', $dataUpdate, "id_staff = $id_account");
+
+                }
+                if ($result) {
+                    echo "<script>alert('Cập nhật thành công tài khoản! Vui lòng đăng nhập lại')</script>";
+                    $redirectUrl = _WEB_ROOT . "/account/logout";
+                    header("refresh:0; url=$redirectUrl");
+                }
+
+            }
+
+        }
+        if (isset($_POST['btn_updatePass'])) {
+            $this->data['error']['password'] = $this->checkPassword();
+            $this->data['error']['confirm_password'] = $this->confirmPassword();
+            if ($_POST['password'] != $_POST['confirm_password']) {
+                $this->data['error']['confirm_password'] = 'Mật khẩu bạn nhập lại không khớp';
+            }
+            if (!empty($_POST['passwordCurrent'])) {
+                if (md5($_POST['passwordCurrent']) != $_SESSION['is_login']['password']) {
+                    $this->data['error']['passwordCurrent'] = 'Mật khẩu hiện tại sai';
+                }
+            } else {
+                $this->data['error']['passwordCurrent'] = 'Chưa nhập mật khẩu';
+
+            }
+
+            if (empty($this->data['error']['confirm_password'])) {
+                $password = $_POST['password'];
+
+                $updatePass = [
+                    'password' => md5($password),
+                ];
+
+                if ($_SESSION['is_login']['id_role'] == 5) {
+                    $result = $this->model->updateData('patient', $updatePass, "id_patient = $id_account");
+                } else {
+                    $result = $this->model->updateData('stafff', $updatePass, "id_staff = $id_account");
+
+                }
+                if ($result) {
+                    echo "<script>alert('Cập nhật thành công tài khoản! Vui lòng đăng nhập lại')</script>";
+                    $redirectUrl = _WEB_ROOT . "/account/logout";
+                    header("refresh:0; url=$redirectUrl");
+                }
+            }
+
+        }
+
+
+        $this->view("Personal/Profile", $this->data);
     }
 
     function profile()
     {
-        $this->view("Personal/Profile");
+        $this->index();
+
     }
 
     function medicalBill($id_appointment)
@@ -39,9 +138,9 @@ class Personal extends Controller
         $id = $id_appointment;
         ;
         $array_medicine = array();
-        if (isset ($_POST['btn_sub'])) {
+        if (isset($_POST['btn_sub'])) {
             for ($i = 1; $i < 100; $i++) {
-                if (isset ($_POST["tenthuoc$i"])) {
+                if (isset($_POST["tenthuoc$i"])) {
                     $name_medicine = $_POST["tenthuoc$i"];
                     $array_medicine[$i] = $this->model->getListTable('medicine', "WHERE name_medicine = '$name_medicine'");
 
@@ -51,7 +150,7 @@ class Personal extends Controller
 
             $thuocArray = [];
             $i = 1;
-            while (isset ($_POST['tenthuoc' . $i])) {
+            while (isset($_POST['tenthuoc' . $i])) {
                 $thuoc = [
                     'tenthuoc' => $_POST['tenthuoc' . $i],
                     'soluong' => $_POST['soluong' . $i],
@@ -104,19 +203,19 @@ class Personal extends Controller
     {
         $redirectUrl = _WEB_ROOT . "/Personal/workCalendar";
 
-        if (isset ($_SESSION['t2'])) {
+        if (isset($_SESSION['t2'])) {
             $t2 = date('Y-m-d', strtotime(str_replace('/', '-', $_SESSION['t2'])));
             $t3 = date('Y-m-d', strtotime(str_replace('/', '-', $_SESSION['t3'])));
             $t4 = date('Y-m-d', strtotime(str_replace('/', '-', $_SESSION['t4'])));
             $t5 = date('Y-m-d', strtotime(str_replace('/', '-', $_SESSION['t5'])));
             $t6 = date('Y-m-d', strtotime(str_replace('/', '-', $_SESSION['t6'])));
 
-            if (isset ($_POST['prev'])) {
+            if (isset($_POST['prev'])) {
 
                 header("refresh:0; url=$redirectUrl");
-            } else if (isset ($_POST['next'])) {
+            } else if (isset($_POST['next'])) {
                 header("refresh:0; url=$redirectUrl");
-            } else if (isset ($_POST['current'])) {
+            } else if (isset($_POST['current'])) {
                 header("refresh:0; url=$redirectUrl");
             }
 
@@ -174,13 +273,29 @@ class Personal extends Controller
 
     }
 
-    function listAppointment()
+    function listAppointment($check = '')
     {
+        $appCheck = '';
+        if ($check != '') {
+            $appCheck = "AND appointment.check = $check";
+        }
         $id_patient = $_SESSION['is_login']['id_account'];
-        $this->data['appointment'] = $this->model->getListAppointment("WHERE patient.id_patient = $id_patient");
+        $this->data['appointment'] = $this->model->getListAppointment("WHERE patient.id_patient = $id_patient $appCheck ");
+        $this->data['medical_bill'] = $this->model->getListTable('medical_bill');
+
 
         $this->view("Personal/ListAppointment", $this->data);
 
+    }
+
+    function deleteAppointment($id_appointment)
+    {
+        $result = $this->model->DeleteData('appointment', "WHERE id_appointment = $id_appointment");
+        if ($result) {
+            echo "<script>alert('Hủy lịch thành công')</script>";
+            $redirectUrl = _WEB_ROOT . "/Personal/listAppointment";
+            header("refresh:0; url=$redirectUrl");
+        }
     }
 
     function listAppointmentPDF($id_appointment)

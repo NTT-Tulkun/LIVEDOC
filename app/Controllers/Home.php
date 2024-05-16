@@ -138,6 +138,7 @@ class Home extends Controller
                     'doctor' => $doctor
                 );
                 $pusher->trigger('my-channel', 'my-event', $data);
+                echo "<script>alert('Đặt lịch khám thành công')</script>";
 
             } else {
                 echo "<script>alert('Bạn chưa chọn thời gian khám')</script>";
@@ -157,7 +158,6 @@ class Home extends Controller
 
         $this->view("Home/AppointmentDetail", $this->data);
     }
-
 
 
 

@@ -84,24 +84,32 @@ padding: 5px;
                 </tr>
             </thead>
             <tbody>";
+$i = 1;
+$sum = 0;
 
 foreach ($medicalBill as $item) {
     $name_medicine = $item['name_medicine'];
     $unit = $item['unit'];
     $billQuantity = $item['billQuantity'];
+    $sum += $item['medicine_price'];
     $medicine_price = currency_format($item['medicine_price']);
     $html .= "
     <tr>
-        <th>1</th>
+        <th>$i</th>
         <td>$name_medicine</td>
         <td>$unit</td>
         <td>$billQuantity</td>
         <td> $medicine_price </td>
     </tr>";
+    $i++;
 }
+
+$html .= "</tbody>
+        </table>";
+$sum = currency_format($sum);
+$html .= "<div style='float:right'><p>Tổng tiền: $sum</p></div><br><br>";
 $html .= "
-            </tbody>
-        </table>
+            
     </div>
     <div style='margin-bottom:30px'>
         <p>Thời gian: $dateTime </p>

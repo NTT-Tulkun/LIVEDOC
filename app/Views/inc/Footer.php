@@ -246,7 +246,10 @@
       method: "POST",
       data: {
         content: message,
-        id: <?php echo $_SESSION['is_login']['id_account'] ?>
+        id: <?php echo $_SESSION['is_login']['id_account'] ?>,
+        fullname: '<?php echo $_SESSION['is_login']['fullname'] ?>',
+        image: '<?php echo $_SESSION['is_login']['image'] ?>',
+
       },
       success: function (data) {
         console.log(data);

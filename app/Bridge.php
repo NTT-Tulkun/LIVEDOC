@@ -16,7 +16,8 @@ require_once "./app/Core/Model.php";
 
 require_once "./app/Core/Library.php";
 
-require_once "./app/Core/Authorization.php";
+require_once "./app/Core/Authentication.php";
+
 
 
 

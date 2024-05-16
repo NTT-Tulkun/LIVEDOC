@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,56 +9,57 @@
 </head>
 <style>
     body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-}
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f3f3f3;
+    }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-.content {
-    text-align: center;
-}
+    .content {
+        text-align: center;
+    }
 
-h1 {
-    font-size: 36px;
-    color: #333;
-}
+    h1 {
+        font-size: 36px;
+        color: #333;
+    }
 
-p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 20px;
-}
+    p {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+    }
 
-a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
+    a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
 
-a:hover {
-    background-color: #0056b3;
-}
-
+    a:hover {
+        background-color: #0056b3;
+    }
 </style>
+
 <body>
     <div class="container">
         <div class="content">
             <h1>404 - Page Not Found</h1>
             <p>Bạn không có thẩm quyền vào trang này.</p>
-            <a href="/">Go to Home Page</a>
+            <a href="<?php echo _WEB_ROOT ?>">Go to Home Page</a>
         </div>
     </div>
 </body>
+
 </html>

@@ -13,6 +13,10 @@ class Admin extends Controller
 
     public function index()
     {
+        $this->data['bookAppointment'] = $this->model->countAppointment();
+        $this->data['bookAppointmentCheck'] = $this->model->countAppointment(" AND `check`= 1");
+
+        $this->data['countPatient'] = $this->model->countPatient();
         $this->data['title'] = 'Trang Admin';
         $this->view("Admin/Home", $this->data);
     }
@@ -189,8 +193,6 @@ class Admin extends Controller
     }
 
 
-
-
     public function addUsers()
     {
         $this->data['title'] = 'Thêm người dùng';
@@ -258,8 +260,6 @@ class Admin extends Controller
         }
         $this->view("Admin/Users/addUsers", $this->data);
     }
-
-
 
 
     public function listUsersStaff()
@@ -463,7 +463,6 @@ class Admin extends Controller
     }
 
 
-
     public function addPostsInsert()
     {
 
@@ -508,6 +507,13 @@ class Admin extends Controller
 
 
         $this->view("Admin/Posts/AddPosts", $this->data);
+    }
+
+    public function listAppointment()
+    {
+        $this->data['title'] = "Danh sách lịch hẹn";
+        $this->view("Admin/ListAppointment", $this->data);
+
     }
 
 }

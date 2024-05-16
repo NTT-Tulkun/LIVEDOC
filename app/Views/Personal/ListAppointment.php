@@ -5,6 +5,13 @@ require './app/Views/inc/HeaderPersonal.php';
 
     <div class="container-fluid px-4 calendar">
         <div class="table-responsive p-3">
+            <a href="<?php echo _WEB_ROOT ?>/Personal/listAppointment"><button class="btn-primary">Tất cả</button></a>
+            <a href="<?php echo _WEB_ROOT ?>/Personal/listAppointment/0"><button class="btn-danger">Chưa
+                    khám</button></a>
+            <a href="<?php echo _WEB_ROOT ?>/Personal/listAppointment/1"><button class="btn-success">Đã
+                    khám</button></a>
+
+
             <table class="table table table-striped table-hover table-bordered" id="dataTable">
                 <thead>
                     <tr class="text-center">
@@ -29,35 +36,36 @@ require './app/Views/inc/HeaderPersonal.php';
                                         <?php if ($item['check'] == 1) { ?>
                                             <span class="badge bg-success mb-3 p-1" style="font-size: 10px;">
                                                 <i class="bi bi-check-circle m-1"></i>Đã khám</span>
-                                        <?php }else { ?>
+                                        <?php } else { ?>
                                             <span class="badge bg-danger mb-3 p-1" style="font-size: 10px;">
-                                                <i class="bi bi-check-circle m-1"></i>Chưa khám</span>
+                                                <i class="bi bi-exclamation-circle m-1"></i>Chưa khám</span>
                                         <?php } ?>
                                         <?php if ($item['check'] == 0) { ?>
-                                        <button type="button" data-bs-toggle="modal" class="btn-danger rounded-1 float-end"
-                                            data-bs-target="#exampleModal2">
-                                            <i class="bi bi-trash"></i> Hủy lịch
-                                        </button>
+                                            <button type="button" data-bs-toggle="modal" class="btn-danger rounded-1 float-end"
+                                                data-bs-target="#Modal<?php echo $item['id_appointment'] ?>">
+                                                <i class="bi bi-trash"></i> Hủy lịch
+                                            </button>
                                         <?php } ?>
 
-                                        <div class="modal fade" id="exampleModal2" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="Modal<?php echo $item['id_appointment'] ?>"
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal
-                                                            title</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        ...
+                                                    <div class="modal-body text-center">
+                                                        <b>Bạn chắn chắn hủy lịch khám vào ngày
+                                                            <?php echo date("d/m/Y", strtotime($item['appointmentDate'])); ?></b>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save
-                                                            changes</button>
+                                                        <button type="button" class="btn-danger"
+                                                            data-bs-dismiss="modal">Hủy</button>
+                                                        <a
+                                                            href="<?php echo _WEB_ROOT ?>/Personal/deleteAppointment/<?php echo $item['id_appointment'] ?>"><button
+                                                                type="button" class="btn-success">Xác
+                                                                nhận</button></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,15 +96,23 @@ require './app/Views/inc/HeaderPersonal.php';
                                                 <td>A4</td>
                                                 <td>A4.5</td>
                                                 <td>
-                                                <?php if ($item['check'] == 0) { ?>    
-                                                <button type="button" data-bs-toggle="modal"
-                                                        class="btn-warning rounded-1"
-                                                        data-bs-target="#appointment<?php echo $item['id_appointment'] ?>">
-                                                        Xem
-                                                    </button>
-                                                <?php }else { ?>
-                                                <a href="" type="button" class="p-1 btn-primary rounded-1">Phiếu khám</a>
-                                                <?php } ?>
+                                                    <?php if ($item['check'] == 0) { ?>
+                                                        <button type="button" data-bs-toggle="modal"
+                                                            class="btn-warning rounded-1"
+                                                            data-bs-target="#appointment<?php echo $item['id_appointment'] ?>">
+                                                            Xem
+                                                        </button>
+                                                    <?php } else {
+                                                        foreach ($medical_bill as $bill) {
+                                                            if ($bill['id_appointment'] == $item['id_appointment']) {
+
+                                                                ?>
+                                                                <a href="<?php echo _WEB_ROOT ?>/Personal/medicalBillPDF/<?php echo $bill['id_record'] ?>"
+                                                                    type="button" class="p-1 btn-primary rounded-1">Phiếu
+                                                                    khám</a>
+                                                            <?php }
+                                                        }
+                                                    } ?>
                                                 </td>
 
                                                 <div class="modal fade"

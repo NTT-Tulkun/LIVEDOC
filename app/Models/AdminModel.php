@@ -19,6 +19,32 @@ class AdminModel extends Model
         return $data;
     }
 
+    public function countAppointment($check = '')
+    {
+        $query = "SELECT COUNT(id_appointment) AS total_appointments FROM  appointment WHERE MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) $check ";
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
+
+    public function countPatient()
+    {
+        $query = "SELECT COUNT(id_patient) AS total_patient FROM patient ";
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
+
 
     // public function insertposts($posts)
     // {

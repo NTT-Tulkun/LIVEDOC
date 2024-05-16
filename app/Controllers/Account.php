@@ -15,7 +15,7 @@ class Account extends Controller
 
     function login()
     {
-        if (isset ($_POST['login'])) {
+        if (isset($_POST['login'])) {
             $this->data['error']['email'] = $this->checkEmail();
             $this->data['error']['password'] = $this->checkPassword();
 
@@ -36,12 +36,14 @@ class Account extends Controller
                             $_SESSION['is_login']['certificate'] = $user['certificate'];
                             $_SESSION['is_login']['experience'] = $user['experience'];
                             $_SESSION['is_login']['description'] = $user['description'];
+
                         }
 
                         $_SESSION['is_login']['fullname'] = $user['full_name'];
                         $_SESSION['is_login']['email'] = $user['email'];
                         $_SESSION['is_login']['phone'] = $user['phone'];
                         $_SESSION['is_login']['birthday'] = $user['birthday'];
+                        $_SESSION['is_login']['password'] = $user['password'];
                         $_SESSION['is_login']['gender'] = $user['gender'];
                         $_SESSION['is_login']['image'] = $user['image'];
                         $_SESSION['is_login']['fullname'] = $user['full_name'];
@@ -70,7 +72,7 @@ class Account extends Controller
 
     function register()
     {
-        if (isset ($_POST['register'])) {
+        if (isset($_POST['register'])) {
 
 
 
@@ -104,7 +106,7 @@ class Account extends Controller
             }
 
 
-            if (empty ($this->data['error'])) {
+            if (empty($this->data['error'])) {
                 $fullname = $_POST['fullname'];
                 $email = $_POST['email'];
                 $phone = $_POST['phone'];
@@ -145,7 +147,7 @@ class Account extends Controller
 
     function confirmUser($email = '')
     {
-        if (isset ($email)) {
+        if (isset($email)) {
             $email = base64_decode($email);
 
             $updates = [
@@ -162,7 +164,7 @@ class Account extends Controller
 
     function ForgotPassword()
     {
-        if (isset ($_POST['sub_email'])) {
+        if (isset($_POST['sub_email'])) {
             $this->data['error']['email'] = $this->checkEmail();
 
             $listPatient = $this->model->getListTable('patient');
@@ -211,13 +213,13 @@ class Account extends Controller
 
     function newPassword($email)
     {
-        if (isset ($email)) {
+        if (isset($email)) {
             $email = base64_decode($email);
 
             $listPatient = $this->model->getListTable('patient', 'where status = 1');
             $listStaff = $this->model->getListTable('staff', 'where status = 1');
             $checkEmail = '';
-            if (isset ($_POST['new_password'])) {
+            if (isset($_POST['new_password'])) {
 
                 $this->data['error']['password'] = $this->checkPassword();
                 $this->data['error']['confirm_password'] = $this->confirmPassword();
@@ -229,7 +231,7 @@ class Account extends Controller
                     }
                 }
 
-                if (empty ($this->data['error'])) {
+                if (empty($this->data['error'])) {
                     if ($_POST['password'] == $_POST['confirm_password']) {
                         foreach ($listPatient as $patient) {
                             if ($patient['email'] == $email) {
@@ -287,15 +289,5 @@ class Account extends Controller
 
     }
 
-    function main()
-    {
-        echo "hello";
-    }
-    function test($a, $b, $c)
-    {
-        echo '123';
-        echo $a;
-        echo $b;
-        echo $c;
-    }
+
 }
