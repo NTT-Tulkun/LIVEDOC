@@ -14,13 +14,16 @@ require './app/Views/inc/HeaderAdmin.php';
             <div class="container-fluid  p-3">
 
                 <div class="card-body" style="background-color: #fff; padding: 20px;">
-                 
-                    <a href="<?php echo _WEB_ROOT ?>/admin/listPatientDelete"  class="float-right text-dark" style="position: relative; margin-right: 20px;">
+
+                    <a href="<?php echo _WEB_ROOT ?>/admin/listPatientDelete" class="float-right text-dark"
+                        style="position: relative; margin-right: 20px;">
                         <i class="fa-solid fa-trash-can" style="font-size: 25px;"></i>
-                        <span style="font-size:12px; border-radius: 50%; padding: 0px 6px; position: absolute; top: -10px; " class="text-light bg-danger"> <?php echo count($listPatientDelete); ?></span>
+                        <span
+                            style="font-size:12px; border-radius: 50%; padding: 0px 6px; position: absolute; top: -10px; "
+                            class="text-light bg-danger"> <?php echo count($listPatientDelete); ?></span>
                     </a>
 
-                  
+
                     <div class="table-responsive p-3">
                         <table class="table  table table-striped table-hover" id="dataTable">
                             <thead>
@@ -35,20 +38,21 @@ require './app/Views/inc/HeaderAdmin.php';
 
                             <tbody>
                                 <?php
-                             
+
                                 $data_index = 0;
                                 foreach ($listPatient as $index => $patient) { ?>
                                     <tr>
-                                    <td id="row<?php echo $staff['id_patient']; ?>"></td>
+                                        <td id="row<?php echo $staff['id_patient']; ?>"></td>
 
                                         <td><?php echo $patient['full_name'] ?></td>
                                         <td><?php echo $patient['email'] ?></td>
                                         <td><?php echo $patient['name_role'] ?></td>
 
                                         <td>
-                                            
+
                                             </button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeletePatient<?php echo $patient['id_patient'] ?>">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#DeletePatient<?php echo $patient['id_patient'] ?>">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </button>
 
@@ -80,18 +84,22 @@ require './app/Views/inc/HeaderAdmin.php';
                                             </div>
 
 
-                                            <button type="button" class="btn btn-success" data-bs-target="#inforuser<?php echo $patient['id_patient'] ?>" data-bs-toggle="modal"><i class="bi bi-eye"></i></button>
+                                            <button type="button" class="btn btn-success"
+                                                data-bs-target="#inforuser<?php echo $patient['id_patient'] ?>"
+                                                data-bs-toggle="modal"><i class="bi bi-eye"></i></button>
 
-                                            <div class="modal" id="inforuser<?php echo $patient['id_patient'] ?>" tabindex="-1">
+                                            <div class="modal" id="inforuser<?php echo $patient['id_patient'] ?>"
+                                                tabindex="-1">
                                                 <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content" style="width: 1000px">
+                                                    <div class="modal-content" style="width: 1200px; margin-left:-100px">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Chi tiết đơn đặt</h5>
-                                                            <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <button type="button" class="btn-close btn-danger"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
 
                                                         <div class="modal-body">
-                                                            <table class="table table-bordered">
+                                                            <table class="table table-bordered" style="width: 1150px">
                                                                 <thead>
                                                                     <tr class="text-center">
                                                                     <tr>
@@ -116,17 +124,19 @@ require './app/Views/inc/HeaderAdmin.php';
 
                                                                     <tr>
                                                                         <th><?php echo ++$index; ?></th>
-                                                                        <th><img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo  $patient['image']; ?>" width="50px" alt=""></th>
-                                                                        <th><?php echo  $patient['full_name']; ?></th>
-                                                                        <th><?php echo   $patient['email']; ?></th>
-                                                                        <th><?php echo   $patient['phone']; ?></th>
-                                                                        <th><?php echo   $patient['address']; ?></th>
-                                                                        <th><?php echo $ngay_dau_ra = date("d/m/Y", strtotime($patient['birthday'])); ?></th>
-                                                                        <th><?php echo  $patient['gender']; ?></th>
-                                                                        <th><?php echo  $patient['blood_group']; ?></th>
-                                                                        <th><?php echo  $patient['weight']; ?></th>
-                                                                        <th><?php echo  $patient['height']; ?></th>
-                                                                        <th><?php echo  $patient['BMI']; ?></th>
+                                                                        <th><img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $patient['image']; ?>"
+                                                                                width="50px" alt=""></th>
+                                                                        <th><?php echo $patient['full_name']; ?></th>
+                                                                        <th><?php echo $patient['email']; ?></th>
+                                                                        <th><?php echo $patient['phone']; ?></th>
+                                                                        <th><?php echo $patient['address']; ?></th>
+                                                                        <th><?php echo $ngay_dau_ra = date("d/m/Y", strtotime($patient['birthday'])); ?>
+                                                                        </th>
+                                                                        <th><?php echo $patient['gender']; ?></th>
+                                                                        <th><?php echo $patient['blood_group']; ?></th>
+                                                                        <th><?php echo $patient['weight']; ?></th>
+                                                                        <th><?php echo $patient['height']; ?></th>
+                                                                        <th><?php echo $patient['BMI']; ?></th>
 
 
 
@@ -204,7 +214,7 @@ require './app/Views/inc/FooterAdmin.php';
 <script>
     function addRowNumbers() {
         var table = document.getElementById("dataTable");
-       
+
 
         var rows = table.rows.length;
 
@@ -215,7 +225,7 @@ require './app/Views/inc/FooterAdmin.php';
     }
 
     var count_delete = document.querySelector('.count_delete');
-  
+
 
     window.onload = function () {
         addRowNumbers();

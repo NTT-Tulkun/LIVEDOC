@@ -4,15 +4,46 @@
 class AdminModel extends Model
 {
 
- //   private $connect;
+    public function getListUserMessage($condition = '')
+    {
+        $query = "SELECT patient.*, message.id_patient, COUNT(message.id_patient) AS message_count, message.send_date FROM patient 
+        INNER JOIN message ON patient.id_patient = message.id_patient WHERE message.status=0 AND message.id_sender % 2 = 1 GROUP BY patient.id_patient 
+        ORDER BY message.send_date DESC;";
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
 
-    // public function __construct()
-    // {
-    //     $p = new Database();
-    //     $this->connect =  $p->connect();
-    // }
+    public function countAppointment($check = '')
+    {
+        $query = "SELECT COUNT(id_appointment) AS total_appointments FROM  appointment WHERE MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) $check ";
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
 
-    
+    public function countPatient()
+    {
+        $query = "SELECT COUNT(id_patient) AS total_patient FROM patient ";
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+        }
+        return $data;
+    }
 
 
     // public function insertposts($posts)

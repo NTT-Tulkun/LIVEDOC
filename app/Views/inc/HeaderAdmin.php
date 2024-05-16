@@ -10,16 +10,18 @@
     <meta name="author" content="">
 
     <title><?php echo $title ?></title>
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon-16x16.png">
-   
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon-16x16.png">
+
     <link href="<?php echo _WEB_ROOT; ?>/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo _WEB_ROOT; ?>/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo _WEB_ROOT; ?>/public/admin/css/chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo _WEB_ROOT; ?>/public/vendor/simple-datatables/style.css">
-   
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
 
 
@@ -39,17 +41,17 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo _WEB_ROOT; ?>">
 
                 <div class="sidebar-brand-text mx-3">
-                
-                <i class="bi bi-house-door" style="font-size: 50px;"></i>
-                <span>Trang chủ</span>
-              
+
+                    <i class="bi bi-house-door" style="font-size: 30px;"></i>
+                    <span>Trang chủ</span>
+
                 </div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-       
+
             <li class="nav-item active">
                 <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -74,107 +76,38 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý:</h6>
-                        <a class="collapse-item" href="<?php echo _WEB_ROOT;  ?>/admin/listUsersStaff">Quản lý nhân viên</a>
-                        <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersPatient">Quản lý bệnh nhân</a>
-                
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersStaff">Quản lý nhân
+                            viên</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersPatient">Quản lý bệnh
+                            nhân</a>
+
 
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo _WEB_ROOT;  ?>/admin/listmedicine">
+                <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listmedicine">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Quản lý thuốc</span></a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                <i class="bi bi-file-earmark-medical"></i>
-                    <span>Quản lý bài viết</span></a>
-            </li>
-
-
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Đơn đặt</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thành phần:</h6>
-                        <a class="collapse-item" href="utilities-color.html">đơn đã đặt</a>
-                        <a class="collapse-item" href="utilities-border.html">Quản lý đơn</a>
-                      
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#colla"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Đơn đặt</span>
-                </a>
-                <div id="colla" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thành phần:</h6>
-                        <a class="collapse-item" href="utilities-color.html">đơn đã đặt</a>
-                        <a class="collapse-item" href="utilities-border.html">Quản lý đơn</a>
-                      
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Nhân viên</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thành phần:</h6>
-                        <a class="collapse-item" href="login.html">Quản lý nhân viên</a>
-                        <a class="collapse-item" href="register.html">Cấp quyền cho nhân viên</a>
-                        <a class="collapse-item" href="forgot-password.html">Tính chi phí ăn </a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Thanh toán:</h6>
-                        <a class="collapse-item" href="404.html">Cập nhật thanh toán</a>
-                        
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Quản lý thuốc</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-           
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/message">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Phản hồi </span></a>
+                    <i class="bi bi-chat"></i>
+                    <span>Phản hồi bệnh nhân</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listAppointment">
+                    <i class="bi bi-calendar3"></i>
+                    <span>Danh sách đặt lịch</span></a>
+            </li>
+
+
+            <hr class="sidebar-divider">
+
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -359,8 +292,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['is_login']['fullname'] ?></span>
-                                <img class="img-profile rounded-circle" src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $_SESSION['is_login']['image'] ?>">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['is_login']['fullname'] ?></span>
+                                <img class="img-profile rounded-circle"
+                                    src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $_SESSION['is_login']['image'] ?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -378,7 +313,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?php echo _WEB_ROOT; ?>/account/logout" >
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT; ?>/account/logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Đăng xuất
                                 </a>
