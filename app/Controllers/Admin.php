@@ -512,6 +512,26 @@ class Admin extends Controller
     public function listAppointment()
     {
         $this->data['title'] = "Danh sách lịch hẹn";
+
+        $id_appointment = null;
+        $email_sdt = null;
+        $listPatient_appointment = $this->model->getListFromTowTables('appointment', 'patient', 'id_patient', 'id_patient');
+        if (isset($_REQUEST['btn_search']) && $_REQUEST['btn_search'] == 'Tìm kiếm') {
+            $email_sdt = $_REQUEST['search'];
+        }
+
+        foreach ($listPatient_appointment as $appointment) {
+            if (strcasecmp(trim($email_sdt), trim($appointment['email'])) == 0 || strcasecmp(trim($email_sdt), trim($appointment['phone'])) == 0) {
+                $id_appointment = $appointment['id_appointment'];
+                $this->data['id_appointment'] = $id_appointment;
+                break;
+            }
+        }
+
+        if ($id_appointment !== null) {
+            $this->data['infoPatient'] = $this->model->getListFromTowTables('appointment', 'patient', 'id_patient', 'id_patient', 'WHERE appointment.id_appointment = ' . $id_appointment);
+            $this->data['infoStaff'] = $this->model->getListFromTowTables('staff', 'appointment', 'id_staff', 'id_staff', 'WHERE appointment.id_appointment = ' . $id_appointment);
+        }
         $this->view("Admin/ListAppointment", $this->data);
 
     }

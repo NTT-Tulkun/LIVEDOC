@@ -23,7 +23,6 @@ require './app/Views/inc/HeaderAdmin.php';
                         <thead>
                             <tr>
                                 <th>STT</th>
-
                                 <th>Tên thuốc</th>
                                 <th>Loại thuốc</th>
                                 <th>Chức năng</th>
@@ -51,7 +50,8 @@ require './app/Views/inc/HeaderAdmin.php';
                                         <?php echo $medicine['name_type_medicine']; ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo _WEB_ROOT ?>/admin/updatemedicine/<?php echo  $medicine['id_medicine']; ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="<?php echo _WEB_ROOT ?>/admin/updatemedicine/<?php echo $medicine['id_medicine']; ?>"
+                                            class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                                         </button>
                                         <button type="button" class="btn btn-danger" data-toggle="modal"
                                             data-target="#DeleteMedicine<?php echo $medicine['id_medicine']; ?>">
