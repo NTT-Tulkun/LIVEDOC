@@ -56,8 +56,7 @@
     <div class="container">
         <div class="content">
             <h1>404 - Page Not Found</h1>
-            <p>The page you are looking for might have been removed, had its name changed, or is temporarily
-                unavailable.</p>
+            <p>Trang web không tồn tại</p>
             <a href="<?php echo _WEB_ROOT ?>">Về trang chủ</a>
         </div>
     </div>

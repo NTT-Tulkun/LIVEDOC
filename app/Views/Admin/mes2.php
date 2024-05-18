@@ -16,12 +16,18 @@ require './app/Views/inc/HeaderAdmin.php';
                                 <div class="flex-grow-1">
                                     <input type="text" class="form-control my-3" placeholder="Search...">
                                 </div>
+
                             </div>
                         </div>
                         <?php foreach ($message as $item) { ?>
                             <a href="<?php echo _WEB_ROOT; ?>/admin/message/<?php echo $item['id_patient'] ?>"
                                 class="list-group-item list-group-item-action border-0">
-                                <div class="badge bg-success float-right"><?php echo $item['message_count'] ?></div>
+                                <?php $url = basename($_GET['url']);
+                                if ($url != $item['id_patient']) { ?>
+                                    <div class="badge bg-success float-right">
+                                        <?php echo $item['message_count'] ?>
+                                    </div>
+                                <?php } ?>
                                 <div class="d-flex align-items-start">
                                     <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $item['image'] ?>"
                                         class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">

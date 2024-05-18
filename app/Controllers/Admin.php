@@ -27,6 +27,12 @@ class Admin extends Controller
         $this->data['messagePatient'] = $this->model->getListFromTowTables('message', 'patient', 'id_patient', 'id_patient', "WHERE message.id_patient = $id_patient");
         $this->data['patient'] = $this->model->getListTable('patient', "WHERE id_patient = $id_patient");
         $this->data['id_patient'] = $id_patient;
+        if ($id_patient != 0 && $id_patient != '') {
+            $updates = [
+                'status' => 1
+            ];
+            $this->model->updateData('message', $updates, "id_sender = $id_patient");
+        }
         $this->data['title'] = 'Phản hồi';
 
         $this->view("Admin/mes2", $this->data);
