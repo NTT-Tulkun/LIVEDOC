@@ -26,7 +26,6 @@
 
 
 
-
 </head>
 
 <body id="page-top">
@@ -85,24 +84,27 @@
                     </div>
                 </div>
             </li>
+            <?php if ($_SESSION['is_login']['id_role'] == 3) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listmedicine">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Quản lý thuốc</span></a>
+                </li>
+            <?php } ?>
+            <?php if ($_SESSION['is_login']['id_role'] == 2) { ?>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listmedicine">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Quản lý thuốc</span></a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/message">
+                        <i class="bi bi-chat"></i>
+                        <span>Phản hồi bệnh nhân</span></a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/message">
-                    <i class="bi bi-chat"></i>
-                    <span>Phản hồi bệnh nhân</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listAppointment">
-                    <i class="bi bi-calendar3"></i>
-                    <span>Danh sách đặt lịch</span></a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listAppointment">
+                        <i class="bi bi-calendar3"></i>
+                        <span>Danh sách đặt lịch</span></a>
+                </li>
+            <?php } ?>
 
 
             <hr class="sidebar-divider">
@@ -190,28 +192,7 @@
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2023</div>
-                                        <span class="font-weight-bold">Đơn hàng đặt thành công!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2023</div>
-                                        <span class="font-weight-bold">Đơn hàng đặt thành công!</span>
-                                    </div>
-                                </a>
+
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-warning">
@@ -247,41 +228,11 @@
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
-                                        <div class="text-truncate">Món ăn ok.</div>
+                                        <div class="text-truncate">Thông báo.</div>
                                         <div class="small text-gray-500">A · 58m</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Món ăn ok</div>
-                                        <div class="small text-gray-500">B · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Món ăn ok</div>
-                                        <div class="small text-gray-500">c · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Món ăn ok</div>
-                                        <div class="small text-gray-500">D · 2w</div>
-                                    </div>
-                                </a>
+
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
@@ -300,18 +251,15 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT; ?>/Personal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Hồ sơ cá nhân
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT; ?>/Admin">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Chức năng
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo _WEB_ROOT; ?>/account/logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

@@ -101,7 +101,7 @@ class Personal extends Controller
                 if ($_SESSION['is_login']['id_role'] == 5) {
                     $result = $this->model->updateData('patient', $updatePass, "id_patient = $id_account");
                 } else {
-                    $result = $this->model->updateData('stafff', $updatePass, "id_staff = $id_account");
+                    $result = $this->model->updateData('staff', $updatePass, "id_staff = $id_account");
 
                 }
                 if ($result) {
@@ -189,7 +189,7 @@ class Personal extends Controller
 
                 $this->model->updateData('appointment', $updates, "id_appointment = $id_appointment");
                 $redirectUrl = _WEB_ROOT . "/Personal/workCalendar";
-                header("refresh:0.5; url=$redirectUrl");
+                header("refresh:0; url=$redirectUrl");
             }
 
 

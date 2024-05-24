@@ -151,7 +151,7 @@ require './app/Views/inc/HeaderPersonal.php';
                                                                 <hr>
                                                                 <h3 class="m-3">GIẤY KHÁM BỆNH</h3>
                                                                 <p style="font-size: 10px; margin-top: -20px">(Tòa A Phòng
-                                                                    A4.5)</p>
+                                                                    A4.<?php echo $item['id_staff'] ?>)</p>
                                                                 <div class="row">
                                                                     <div class="col-3">
                                                                         <img style="width: 160px;"

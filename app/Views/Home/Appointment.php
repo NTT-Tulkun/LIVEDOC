@@ -86,15 +86,18 @@ require './app/Views/inc/Header.php';
             <select class="form-select border border-primary" id="department" onchange="updateSecondSelect()"
               name="department">
               <option value="0">---Chọn phòng khám---</option>
-              <?php foreach ($departments as $item) { ?>
-                <option  value="<?php echo $item['id_department'] ?>">
-                  <?php echo $item['department_name']; ?>
-                </option>
-              <?php } ?>
+              <?php foreach ($departments as $item) {
+                if ($item['id_department'] != 7) {
+                  ?>
+                  <option value="<?php echo $item['id_department'] ?>">
+                    <?php echo $item['department_name']; ?>
+                  </option>
+                <?php }
+              } ?>
             </select>
             <p class="text-danger error">
               <?php
-              if (!empty ($error['department'])) {
+              if (!empty($error['department'])) {
                 echo $error['department'];
               } ?>
             </p>
@@ -106,7 +109,7 @@ require './app/Views/inc/Header.php';
             </select>
             <p class="text-danger error">
               <?php
-              if (!empty ($error['doctor'])) {
+              if (!empty($error['doctor'])) {
                 echo $error['doctor'];
               } ?>
             </p>
@@ -141,7 +144,7 @@ require './app/Views/inc/Footer.php';
 
     switch (selectedValue) {
       <?php foreach ($departments as $department) { ?>
-              case "<?php echo $department['id_department'] ?>":
+                  case "<?php echo $department['id_department'] ?>":
       secondSelect.innerHTML = '<option value="0">---Vui lòng chọn 1 bác sĩ---</option>';
       <?php foreach ($doctors as $doctor) { ?>
         <?php if ($doctor['id_department'] == $department['id_department']) { ?>

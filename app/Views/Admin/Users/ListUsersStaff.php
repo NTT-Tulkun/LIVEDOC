@@ -13,7 +13,6 @@ require './app/Views/inc/HeaderAdmin.php';
 
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-
                 <div class="card-body" style="background-color: #fff; padding: 20px;">
                     <a href="<?php echo _WEB_ROOT ?>/admin/addUsers" class="btn btn-primary">Thêm nhân viên</a>
                     <a href="<?php echo _WEB_ROOT ?>/admin/listStaffDelete" class="float-right text-dark"
@@ -44,52 +43,18 @@ require './app/Views/inc/HeaderAdmin.php';
                                 $data_index = 0;
                                 foreach ($listStaff as $index => $staff) { ?>
                                     <tr>
-                                        <td id="row<?php echo $staff['id_staff']; ?>"></td>
-                                        <td>
-                                            <?php echo $staff['full_name'] ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $staff['email'] ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $staff['name_role'] ?>
-                                        </td>
-
+                                        <td><?php echo ++$i ?></td>
+                                        <td><?php echo $staff['full_name'] ?></td>
+                                        <td><?php echo $staff['email'] ?></td>
+                                        <td><?php echo $staff['name_role'] ?></td>
                                         <td>
                                             <a href="<?php echo _WEB_ROOT ?>/admin/updateUser/<?php echo $staff['id_staff'] ?>"
                                                 class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
-                                            </button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#DeleteStaff<?php echo $staff['id_staff'] ?>">
+                                            <button class="btn btn-danger btn-delete-staff"
+                                                data-staff-id="<?php echo $staff['id_staff'] ?>">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </button>
 
-                                            <div class="modal fade" id="DeleteStaff<?php echo $staff['id_staff'] ?>"
-                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true" style="margin-top: 100px;">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-
-                                                        <div class="modal-body">
-                                                            <h5>Bạn có chắc chắn muốn xóa nhân viên
-                                                                <b>
-                                                                    <?php echo $staff['full_name'] ?>
-                                                                </b>
-                                                                ?
-                                                            </h5>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Hủy</button>
-                                                            <button type="button"
-                                                                id="confirmDelete<?php echo $staff['id_staff']; ?>"
-                                                                class="btn btn-danger" data-dismiss="modal"
-                                                                onclick="removeRow(<?php echo $data_index++; ?>)">Xác
-                                                                nhận</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
 
                                             <button type="button" class="btn btn-success"
@@ -192,64 +157,29 @@ require './app/Views/inc/FooterAdmin.php';
 
 <script>
     $(document).ready(function () {
-
-        <?php foreach ($listStaff as $index => $staff) { ?>
-            var confirmDelete<?php echo $staff['id_staff']; ?> = "#confirmDelete<?php echo $staff['id_staff']; ?>";
-
-        <?php } ?>
-
-        <?php foreach ($listStaff as $staff) { ?>
-            $(confirmDelete<?php echo $staff['id_staff']; ?>).on('click', function () {
-                var id_staff = <?php echo $staff['id_staff']; ?>;
-
-                $.ajax({
-                    url: "<?php echo _WEB_ROOT ?>/admin/deleteUserStaff",
-                    method: "POST",
-                    data: {
-                        id_staff: id_staff
-                    },
-                    success: function (data) {
-
-                        console.log(data);
-                        alert('xóa nhân viên thành công');
-
-                    }
-                })
-            });
-        <?php } ?>
+        $(".btn-delete-staff").on('click', function () {
+            var id_staff = $(this).data('staff-id');
+            var rowToDelete = $(this).closest('tr[data-index]'); // Tìm hàng chứa nút xóa
+            confirmDelete(id_staff, rowToDelete);
+        });
     });
-</script>
 
-
-<script>
-    function addRowNumbers() {
-        var table = document.getElementById("dataTable");
-
-
-        var rows = table.rows.length;
-
-        for (var i = 1; i < rows; i++) {
-            var cell = table.rows[i].cells[0];
-            cell.textContent = i;
+    function confirmDelete(id_staff, rowToDelete) {
+        if (confirm('Bạn chắc chắn muốn xóa vĩnh viễn chứ!')) {
+            $.ajax({
+                url: "<?php echo _WEB_ROOT ?>/admin/deleteUserStaff",
+                method: "POST",
+                data: { id_staff: id_staff },
+                success: function (data) {
+                    console.log(data);
+                    rowToDelete.hide(); // Ẩn hàng khi xóa thành công
+                    alert('Xóa nhân viên thành công');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Có lỗi xảy ra:', error);
+                    alert('Xóa nhân viên thất bại, vui lòng thử lại.');
+                }
+            });
         }
     }
-
-
-
-    window.onload = function () {
-        addRowNumbers();
-    };
-</script>
-
-<script>
-
-    function removeRow(index) {
-        var row = document.querySelector('tr[data-index="' + index + '"]');
-        if (row) {
-            row.parentNode.removeChild(row);
-            addRowNumbers();
-        }
-    }
-
-
 </script>

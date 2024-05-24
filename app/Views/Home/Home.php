@@ -38,7 +38,7 @@ require './app/Views/inc/Header.php';
 
 </section>
 
-<section class="py-0">
+<section class="py-0" id="department">
 
   <div class="container">
     <div class="row py-5 align-items-center justify-content-center justify-content-lg-evenly">
@@ -107,7 +107,7 @@ require './app/Views/inc/Header.php';
 
 
 
-<section class="pb-0">
+<section class="pb-0" id="doctor">
 
   <div class="container">
     <div class="row">
@@ -138,35 +138,59 @@ require './app/Views/inc/Header.php';
             href="#carouselExampleDark" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"
               aria-hidden="true"></span><span class="visually-hidden">Next</span></a>
           <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+            <?php
+            $interval = 10000;
+            $totalDoctors = count($doctor);
 
-                <div class="col-md-4 mb-8 mb-md-0">
-                  <div class="card card-span h-100 shadow">
-                    <div class="card-body d-flex flex-column flex-center py-5"><img
-                        src="<?php echo _WEB_ROOT; ?>/public/img/gallery/anita.png" width="128" alt="..." />
-                      <h5 class="mt-3">Anita Deshai</h5>
-                      <p class="mb-0 fs-xxl-1">Pediatrics, Gochi Medicine</p>
-                      <p class="text-600 mb-0">Florida, United States</p>
-                      <p class="text-600 mb-4">10 years experience</p>
-                      <div class="text-center">
-                        <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
+            for ($outerIndex = 0; $outerIndex < $totalDoctors; $outerIndex += 3) {
+              if ($outerIndex >= 3 && $outerIndex < 6) {
+                $interval = 20000;
+              } elseif ($outerIndex >= 6) {
+                $interval = 30000;
+              }
+              ?>
+              <div class="carousel-item <?php echo ($outerIndex == 0) ? 'active' : ''; ?>"
+                data-bs-interval="<?php echo $interval; ?>">
+                <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                  <?php
+                  for ($innerIndex = 0; $innerIndex < 3; $innerIndex++) {
+                    if ($outerIndex + $innerIndex < $totalDoctors) {
+                      $doc = $doctor[$outerIndex + $innerIndex];
+                      ?>
+                      <div class="col-md-4 mb-8 mb-md-0">
+                        <div class="card card-span h-100 shadow">
+                          <div class="card-body d-flex flex-column flex-center py-5">
+                            <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $doc['image'] ?>" width="150"
+                              height="100" alt="..." />
+                            <h5 class="mt-3"><?php echo $doc['full_name'] ?></h5>
+                            <p class="mb-0 fs-xxl-1">Khoa: <?php echo $doc['department_name'] ?></p>
+
+                            <div class="text-center">
+                              <button class="btn btn-outline-secondary rounded-pill" type="submit">Xem</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    <?php } ?>
+                  <?php } ?>
                 </div>
               </div>
+              <?php
+            }
+            ?>
 
-
-            </div>
           </div>
+
         </div>
       </div>
+
+
+
     </div>
   </div>
 </section>
 
-<section class="py-5">
+<section class="py-5" id="posts">
 
   <div class="container">
     <div class="row">
@@ -176,7 +200,7 @@ require './app/Views/inc/Header.php';
         </div>
         <!--/.bg-holder-->
 
-        <h1 class="text-center">RECENT BLOGPOSTS</h1>
+        <h1 class="text-center">BÀI VIẾT</h1>
       </div>
     </div>
   </div>
@@ -202,9 +226,9 @@ require './app/Views/inc/Header.php';
                 d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z">
               </path>
               <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"> </path>
-            </svg><span class="fs--1 text-900">Nov 21, 2021</span><span class="fs--1"></span>
-            <h5 class="font-base fs-lg-0 fs-xl-1 my-3">COVID-19: The Most Up-to-Date Information</h5><a
-              class="stretched-link" href="#!">read full article</a>
+            </svg><span class="fs--1 text-900">27 tháng 05 năm 2024</span><span class="fs--1"></span>
+            <h5 class="font-base fs-lg-0 fs-xl-1 my-3">Thông tin mới</h5><a class="stretched-link" href="#!">Đọc toàn
+              bộ bài viết</a>
           </div>
         </div>
       </div>

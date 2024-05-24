@@ -57,7 +57,7 @@
         <div class="content">
             <h1>404 - Page Not Found</h1>
             <p>Bạn không có thẩm quyền vào trang này.</p>
-            <a href="<?php echo _WEB_ROOT ?>">Go to Home Page</a>
+            <a href="<?php echo _WEB_ROOT ?>">Về lại trang chủ</a>
         </div>
     </div>
 </body>

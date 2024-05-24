@@ -196,7 +196,9 @@ class Account extends Controller
     function logout()
     {
         unset($_SESSION['is_login']);
-        $this->view("Home/Home");
+        $redirectUrl = _WEB_ROOT;
+        header("refresh:0; url=$redirectUrl");
+
     }
 
     function notifyRegister()

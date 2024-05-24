@@ -56,6 +56,8 @@ class Home extends Controller
             $acc = $_SESSION['is_login']['id_account'];
             $dk = "WHERE id_patient = $acc";
         }
+
+        $this->data['doctor'] = $this->model->getListFromTowTables('staff', 'department', 'id_department', 'id_department', "WHERE staff.id_department != 7");
         $this->data['message'] = $this->model->getListTable('message', "$dk");
 
         $this->view("Home/Home", $this->data);

@@ -52,10 +52,10 @@
               </li>
 
             <?php } ?>
-            <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="#about">Giới thiệu</a></li>
-            <li class="nav-item px-2"><a class="nav-link" href="#departments">Liên Hệ</a></li>
-            <li class="nav-item px-2"><a class="nav-link" href="#findUs">Bộ phận</a></li>
-            <li class="nav-item px-2"><a class="nav-link" href="#findUs">Bài viết</a></li>
+            <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="#home">Giới thiệu</a></li>
+            <li class="nav-item px-2"><a class="nav-link" href="#department">Bộ phận</a></li>
+            <li class="nav-item px-2"><a class="nav-link" href="#doctor">Bác sĩ</a></li>
+            <li class="nav-item px-2"><a class="nav-link" href="#posts">Bài viết</a></li>
 
             <?php if (isset($_SESSION['is_login']['id_role']) && $_SESSION['is_login']['id_role'] == 5) { ?>
               <li style="margin-top: -5px;" class="nav-item px-2 "><a class="nav-link"

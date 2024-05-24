@@ -7,13 +7,13 @@ $dompdf = new Dompdf(array('enable_remote' => true));
 
 $fullName = $appointment[0]['fullNamePatient'];
 $genderPatient = $appointment[0]['genderPatient'];
-$patientBirthday= date("d/m/Y", strtotime($appointment[0]['patientBirthday']));
+$patientBirthday = date("d/m/Y", strtotime($appointment[0]['patientBirthday']));
 
 $describe_problem = $appointment[0]['describe_problem'];
 
-$image = _WEB_ROOT . '/public/img/users/'.$appointment[0]['patientImage'];
+$image = _WEB_ROOT . '/public/img/users/' . $appointment[0]['patientImage'];
 
-
+$room = $appointment[0]['id_staff'];
 
 $html = "
 <!DOCTYPE html>
@@ -41,9 +41,9 @@ $html = "
     <div style='clear: left; clear: right;'></div>
     <hr>
     <h2 style='text-align:center; color:blue'>GIẤY KHÁM BỆNH</h2>
-    <p style='font-size: 10px; margin-top: -25px; text-align:center'>(Tòa A Phòng A4.5)</p>
+    <p style='font-size: 10px; margin-top: -25px; text-align:center'>(Tòa A Phòng A4.$room  )</p>
    <div style='margin-top:70px; width: 160px; display: inline-block;'>
-    <img src='$image' alt='' style='width:150px'>
+    <img src='$image' alt='' style='width:140px;height: 100px'>
    </div>
     <div style='position: absolute; top: 160px; left: 200px'>
         <span>Họ và tên: $fullName 
@@ -56,8 +56,9 @@ $html = "
         <span>Triệu chứng: $describe_problem
         </span><br>
     </div>
-    <h4 style='text-align:center; color:blue; margin-top: -50px;'>TIỀN SỬ CỦA ĐỐI TƯỢNG KHÁM SỨC KHỎE</h4>
 
+
+    <h4 style='text-align:center; color:blue;'>TIỀN SỬ CỦA ĐỐI TƯỢNG KHÁM SỨC KHỎE</h4>
     <p><b>1. Tiền sử gia đình</b></p>
     <p style='margin-top:-20px'>Có ai trong gia đình ông
         (bà) mắc một trong các bệnh: truyền nhiễm,
@@ -161,7 +162,7 @@ $pdfContent = $dompdf->output();
 </head>
 
 <body>
-   
+
 
     <iframe src="data:application/pdf;base64,<?= base64_encode($pdfContent); ?>"></iframe>
 </body>

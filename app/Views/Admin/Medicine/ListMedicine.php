@@ -23,7 +23,6 @@ require './app/Views/inc/HeaderAdmin.php';
                         <thead>
                             <tr>
                                 <th>STT</th>
-
                                 <th>Tên thuốc</th>
                                 <th>Loại thuốc</th>
                                 <th>Chức năng</th>
@@ -31,19 +30,17 @@ require './app/Views/inc/HeaderAdmin.php';
                         </thead>
 
                         <tbody class="main">
-                            <script> var i = 0;</script>
+
                             <?php
 
-
-                            $data_index = 0;
+                            $i = 0;
                             foreach ($listMedicine as $medicine) {
 
                                 ?>
 
 
-                                <tr id="row<?php echo $medicine['id_medicine']; ?>">
-
-                                    <td></td>
+                                <tr>
+                                    <td><?php echo ++$i; ?></td>
                                     <td>
                                         <?php echo $medicine['name_medicine']; ?>
                                     </td>
@@ -51,43 +48,17 @@ require './app/Views/inc/HeaderAdmin.php';
                                         <?php echo $medicine['name_type_medicine']; ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo _WEB_ROOT ?>/admin/updatemedicine/<?php echo  $medicine['id_medicine']; ?>" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="<?php echo _WEB_ROOT ?>/admin/updatemedicine/<?php echo $medicine['id_medicine']; ?>"
+                                            class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                                         </button>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#DeleteMedicine<?php echo $medicine['id_medicine']; ?>">
+
+                                        <button class="btn btn-danger btn-delete-medicine"
+                                            data-medicine-id="<?php echo $medicine['id_medicine']; ?>">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
                                         <button type="button" class="btn btn-success" data-toggle="modal"
                                             data-target="#MedicineDetail<?php echo $medicine['id_medicine']; ?>"><i
                                                 class="bi bi-eye"></i></button>
-
-
-
-
-                                        <div class="modal fade" id="DeleteMedicine<?php echo $medicine['id_medicine']; ?>"
-                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true" style="margin-top: 100px;">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-
-                                                    <div class="modal-body">
-                                                        <h3>Bạn có chắc chắn muốn xóa ?</h3>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Hủy</button>
-                                                        <button type="button"
-                                                            id="confirmDelete<?php echo $medicine['id_medicine']; ?>"
-                                                            class="btn btn-danger" data-dismiss="modal"
-                                                            onclick="removeRow(<?php echo $data_index++; ?>)">Xác
-                                                            nhận</button>
-                                                    </div>
-
-
-
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="modal fade" id="MedicineDetail<?php echo $medicine['id_medicine']; ?>"
                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -162,55 +133,29 @@ require './app/Views/inc/FooterAdmin.php';
 
 <script>
     $(document).ready(function () {
-        <?php foreach ($listMedicine as $medicine) { ?>
-            var confirmDelete<?php echo $medicine['id_medicine']; ?> = "#confirmDelete<?php echo $medicine['id_medicine']; ?>";
-            var id_medicine_<?php echo $medicine['id_medicine']; ?> = <?php echo $medicine['id_medicine']; ?>;
-        <?php } ?>
-
-        <?php foreach ($listMedicine as $medicine) { ?>
-            $(confirmDelete<?php echo $medicine['id_medicine']; ?>).on('click', function () {
-                var id_medicine = id_medicine_<?php echo $medicine['id_medicine']; ?>;
-
-                $.ajax({
-                    url: "<?php echo _WEB_ROOT ?>/admin/deletemedicine",
-                    method: "POST",
-                    data: {
-                        id_medicine: id_medicine
-                    },
-                    success: function (data) {
-                        console.log(data);
-
-                    }
-                })
-            });
-        <?php } ?>
+        $(".btn-delete-medicine").on('click', function () {
+            var id_medicine = $(this).data('medicine-id');
+            var rowToDelete = $(this).closest('tr[data-index]'); // Tìm hàng chứa nút xóa
+            confirmDelete(id_medicine, rowToDelete);
+        });
     });
-</script>
 
-
-<script>
-    function addRowNumbers() {
-        var table = document.getElementById("dataTable");
-        var rows = table.rows.length;
-
-        for (var i = 1; i < rows; i++) {
-            var cell = table.rows[i].cells[0];
-            cell.textContent = i;
-        }
-    }
-
-    window.onload = function () {
-        addRowNumbers();
-    };
-</script>
-
-<script>
-
-    function removeRow(index) {
-        var row = document.querySelector('tr[data-index="' + index + '"]');
-        if (row) {
-            row.parentNode.removeChild(row);
-            addRowNumbers();
+    function confirmDelete(id_medicine, rowToDelete) {
+        if (confirm('Bạn chắc chắn muốn xóa vĩnh viễn chứ!')) {
+            $.ajax({
+                url: "<?php echo _WEB_ROOT ?>/admin/deletemedicine",
+                method: "POST",
+                data: { id_medicine: id_medicine },
+                success: function (data) {
+                    console.log(data);
+                    rowToDelete.hide(); // Ẩn hàng khi xóa thành công
+                    alert('Xóa nhân viên thành công');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Có lỗi xảy ra:', error);
+                    alert('Xóa nhân viên thất bại, vui lòng thử lại.');
+                }
+            });
         }
     }
 </script>

@@ -39,11 +39,11 @@ require './app/Views/inc/HeaderAdmin.php';
                             <tbody>
                                 <?php
 
-                                $data_index = 0;
+                                $i = 0;
+
                                 foreach ($listPatient as $index => $patient) { ?>
                                     <tr>
-                                        <td id="row<?php echo $staff['id_patient']; ?>"></td>
-
+                                        <td><?php echo ++$i ?></td>
                                         <td><?php echo $patient['full_name'] ?></td>
                                         <td><?php echo $patient['email'] ?></td>
                                         <td><?php echo $patient['name_role'] ?></td>
@@ -51,37 +51,10 @@ require './app/Views/inc/HeaderAdmin.php';
                                         <td>
 
                                             </button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#DeletePatient<?php echo $patient['id_patient'] ?>">
+                                            <button class="btn btn-danger btn-delete-patient"
+                                                data-patient-id="<?php echo $patient['id_patient'] ?>">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </button>
-
-                                            <div class="modal fade" id="DeletePatient<?php echo $patient['id_patient'] ?>"
-                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true" style="margin-top: 100px;">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-
-                                                        <div class="modal-body">
-                                                            <h5>Bạn có chắc chắn muốn xóa nhân viên
-                                                                <b>
-                                                                    <?php echo $patient['full_name'] ?>
-                                                                </b>
-                                                                ?
-                                                            </h5>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Hủy</button>
-                                                            <button type="button"
-                                                                id="confirmDelete<?php echo $patient['id_patient']; ?>"
-                                                                class="btn btn-danger" data-dismiss="modal"
-                                                                onclick="removeRow(<?php echo $data_index++; ?>)">Xác
-                                                                nhận</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
 
                                             <button type="button" class="btn btn-success"
@@ -183,64 +156,29 @@ require './app/Views/inc/FooterAdmin.php';
 
 <script>
     $(document).ready(function () {
-
-        <?php foreach ($listPatient as $index => $patient) { ?>
-            var confirmDelete<?php echo $patient['id_patient']; ?> = "#confirmDelete<?php echo $patient['id_patient']; ?>";
-
-        <?php } ?>
-
-        <?php foreach ($listPatient as $patient) { ?>
-            $(confirmDelete<?php echo $patient['id_patient']; ?>).on('click', function () {
-                var id_patient = <?php echo $patient['id_patient']; ?>
-
-                $.ajax({
-                    url: "<?php echo _WEB_ROOT ?>/admin/deleteUserPatient",
-                    method: "POST",
-                    data: {
-                        id_patient: id_patient
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        alert('xóa bệnh nhân thành công');
-
-                    }
-                })
-            });
-        <?php } ?>
+        $(".btn-delete-patient").on('click', function () {
+            var id_patient = $(this).data('patient-id');
+            var rowToDelete = $(this).closest('tr[data-index]'); // Tìm hàng chứa nút xóa
+            confirmDelete(id_patient, rowToDelete);
+        });
     });
-</script>
 
-
-<script>
-    function addRowNumbers() {
-        var table = document.getElementById("dataTable");
-
-
-        var rows = table.rows.length;
-
-        for (var i = 1; i < rows; i++) {
-            var cell = table.rows[i].cells[0];
-            cell.textContent = i;
+    function confirmDelete(id_patient, rowToDelete) {
+        if (confirm('Bạn chắc chắn muốn xóa vĩnh viễn chứ!')) {
+            $.ajax({
+                url: "<?php echo _WEB_ROOT ?>/admin/deleteUserPatient",
+                method: "POST",
+                data: { id_patient: id_patient },
+                success: function (data) {
+                    console.log(data);
+                    rowToDelete.hide(); // Ẩn hàng khi xóa thành công
+                    alert('Xóa nhân viên thành công');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Có lỗi xảy ra:', error);
+                    alert('Xóa nhân viên thất bại, vui lòng thử lại.');
+                }
+            });
         }
     }
-
-    var count_delete = document.querySelector('.count_delete');
-
-
-    window.onload = function () {
-        addRowNumbers();
-    };
-</script>
-
-<script>
-
-    function removeRow(index) {
-        var row = document.querySelector('tr[data-index="' + index + '"]');
-        if (row) {
-            row.parentNode.removeChild(row);
-            addRowNumbers();
-        }
-    }
-
-
 </script>
