@@ -45,6 +45,53 @@ class AdminModel extends Model
         return $data;
     }
 
+    public function getListAppointment($condition = ""){
+        $query = "SELECT
+            appointment.id_appointment as id_appointment,
+            appointment.check as statusAppointment,
+            appointment.date as dateAppointment,
+            appointment.hour as hourAppointment,
+            appointment.describe_problem as describe_problem,
+            patient.full_name as fullNamePatient,
+            patient.email as emailPatient,
+            patient.gender as genderPatient,
+            patient.birthday as birthdayPatient,
+            patient.phone as phonePatient,
+            staff.image as imageStaff,
+            staff.full_name as fullNameStaff
+        FROM patient
+        INNER JOIN appointment ON patient.id_patient = appointment.id_patient
+        INNER JOIN staff ON appointment.id_staff = staff.id_staff
+        INNER JOIN department ON department.id_department = staff.id_department
+        $condition";
+        
+        $result = mysqli_query($this->connect, $query);
+        $data = array();
+        
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                // Chuyển đổi ngày về định dạng dd/mm/yyyy
+                if (!empty($row['dateAppointment'])) {
+                    $date = DateTime::createFromFormat('Y-m-d', $row['dateAppointment']);
+                    if ($date) {
+                        $row['dateAppointment'] = $date->format('d/m/Y');
+                    }
+                }
+                if (!empty($row['birthdayPatient'])) {
+                    $date = DateTime::createFromFormat('Y-m-d', $row['birthdayPatient']);
+                    if ($date) {
+                        $row['birthdayPatient'] = $date->format('d/m/Y');
+                    }
+                }
+                $data[] = $row;  // Thêm mỗi hàng vào mảng
+            }
+        }
+        
+        return $data;
+    }
+    
+    
+
 
     // public function insertposts($posts)
     // {

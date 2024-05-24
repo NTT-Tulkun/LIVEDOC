@@ -521,26 +521,37 @@ class Admin extends Controller
 
     public function listAppointment()
     {
-        $this->data['title'] = "Danh sách lịch hẹn";
+        $this->data['title'] = "Tìm kiếm lịch hẹn";
 
         $id_appointment = null;
         $email_sdt = null;
-        $listPatient_appointment = $this->model->getListFromTowTables('appointment', 'patient', 'id_patient', 'id_patient');
+        $formatted_date = null;
+        $listPatient_appointment = $this->model->getListAppointment();
         if (isset($_REQUEST['btn_search']) && $_REQUEST['btn_search'] == 'Tìm kiếm') {
+            $date_search = $_REQUEST['date_search'];
+            if (!empty($date_search)) {
+                $date_appointment = DateTime::createFromFormat('Y-m-d', $date_search);
+                if ($date_appointment !== false) {
+                    // Chuyển đổi định dạng thành 'd/m/Y'
+                    $formatted_date = $date_appointment->format('d/m/Y');
+                }
+            }
+           
             $email_sdt = $_REQUEST['search'];
         }
 
         foreach ($listPatient_appointment as $appointment) {
-            if (strcasecmp(trim($email_sdt), trim($appointment['email'])) == 0 || strcasecmp(trim($email_sdt), trim($appointment['phone'])) == 0) {
-                $id_appointment = $appointment['id_appointment'];
-                $this->data['id_appointment'] = $id_appointment;
-                break;
+            if(strcasecmp(trim($formatted_date), trim($appointment['dateAppointment'])) == 0){
+                if (strcasecmp(trim($email_sdt), trim($appointment['emailPatient'])) == 0 || strcasecmp(trim($email_sdt), trim($appointment['phonePatient'])) == 0) {
+                    $id_appointment = $appointment['id_appointment'];
+                    $this->data['id_appointment'] = $id_appointment;
+                    break;
+                }
             }
         }
 
         if ($id_appointment !== null) {
-            $this->data['infoPatient'] = $this->model->getListFromTowTables('appointment', 'patient', 'id_patient', 'id_patient', 'WHERE appointment.id_appointment = ' . $id_appointment);
-            $this->data['infoStaff'] = $this->model->getListFromTowTables('staff', 'appointment', 'id_staff', 'id_staff', 'WHERE appointment.id_appointment = ' . $id_appointment);
+            $this->data['infoAppointment'] = $this->model->getListAppointment('WHERE appointment.id_appointment = ' . $id_appointment);
         }
         $this->view("Admin/ListAppointment", $this->data);
 
