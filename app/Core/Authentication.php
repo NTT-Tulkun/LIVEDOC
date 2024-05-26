@@ -10,6 +10,9 @@ if ($currentURL == $web_root . '/') {
     $check = true;
 } else if (rtrim(dirname($currentURL), "/") == $web_root . '/account') {
     $check = true;
+} elseif (rtrim(dirname($currentURL), "/") == $web_root . '/account/newPassword') {
+    $check = true;
+
 } else {
 
     if (!isset($_SESSION['is_login'])) {

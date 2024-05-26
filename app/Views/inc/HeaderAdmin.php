@@ -65,25 +65,26 @@
                 Quản lý
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Quản lý người dùng</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Quản lý:</h6>
-                        <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersStaff">Quản lý nhân
-                            viên</a>
-                        <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersPatient">Quản lý bệnh
-                            nhân</a>
+            <?php if ($_SESSION['is_login']['id_role'] == 1) { ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý:</h6>
+                            <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersStaff">Quản lý nhân
+                                viên</a>
+                            <a class="collapse-item" href="<?php echo _WEB_ROOT; ?>/admin/listUsersPatient">Quản lý bệnh
+                                nhân</a>
 
 
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            <?php } ?>
             <?php if ($_SESSION['is_login']['id_role'] == 3) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo _WEB_ROOT; ?>/admin/listmedicine">
@@ -179,14 +180,14 @@
                         </li>
 
                         <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <!-- <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
+
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -208,15 +209,14 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
+
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
-                            <!-- Dropdown - Messages -->
+
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
@@ -235,7 +235,7 @@
 
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
-                        </li>
+                        </li> -->
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 

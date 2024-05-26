@@ -64,7 +64,7 @@ class Personal extends Controller
                 if ($_SESSION['is_login']['id_role'] == 5) {
                     $result = $this->model->updateData('patient', $dataUpdate, "id_patient = $id_account");
                 } else {
-                    $result = $this->model->updateData('stafff', $dataUpdate, "id_staff = $id_account");
+                    $result = $this->model->updateData('staff', $dataUpdate, "id_staff = $id_account");
 
                 }
                 if ($result) {
@@ -91,7 +91,7 @@ class Personal extends Controller
 
             }
 
-            if (empty($this->data['error']['confirm_password'])) {
+            if (empty($this->data['error']['confirm_password']) && empty($this->data['error']['passwordCurrent'])) {
                 $password = $_POST['password'];
 
                 $updatePass = [

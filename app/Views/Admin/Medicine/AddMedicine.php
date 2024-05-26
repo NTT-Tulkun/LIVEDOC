@@ -78,7 +78,7 @@ require './app/Views/inc/HeaderAdmin.php';
 
         <div class="col-4 mb-3">
           <label for="validationDefault02" class="form-label">Giá:</label>
-          <input type="number" class="form-control" name="price" placeholder="Giá mỗi lọ" value="<?php
+          <input type="number" class="form-control" name="price" placeholder="Giá " value="<?php
           if (!empty($_POST['price']) && empty($error['price'])) {
             echo $_POST['price'];
           } ?>">

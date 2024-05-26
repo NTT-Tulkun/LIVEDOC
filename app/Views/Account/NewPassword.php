@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Cập nhật lại mật khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo _WEB_ROOT; ?>/public/img/favicons/favicon.ico">
@@ -59,10 +59,11 @@
 
 
                         <div class="pt-3">
-                            <input type="submit" value="Xác nhận" class="btn btn-primary form-control" name="new_password">
+                            <input type="submit" value="Xác nhận" class="btn btn-primary form-control"
+                                name="new_password">
                         </div>
 
-                      
+
 
 
                 </div>

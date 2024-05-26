@@ -81,12 +81,23 @@ class Home extends Controller
         $this->data['departments'] = $this->model->getListTable('department');
         $this->data['doctors'] = $this->model->getListTable('staff', 'WHERE id_role=4');
 
+        if (isset($_POST['sub_appointment'])) {
+            if ((isset($_POST['department']) && $_POST['department'] != 0) && (isset($_POST['doctor']) && $_POST['doctor'] != 0)) {
+                $_SESSION['appointment']['department'] = $_POST['department'];
+                $_SESSION['appointment']['doctor'] = $_POST['doctor'];
+
+                $redirectUrl = _WEB_ROOT . "/home/appointmentDetail";
+                header("refresh:0; url=$redirectUrl");
+            }
+
+        }
 
         $this->view("Home/Appointment", $this->data);
     }
 
     public function appointmentDetail()
     {
+
 
         if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) {
 
@@ -98,55 +109,73 @@ class Home extends Controller
             $id_staff = $_SESSION['appointment']['doctor'];
             $this->data['appointment'] = $this->model->getListTable('appointment', "WHERE date='$date' AND id_staff =  $id_staff");
 
-
         }
-
 
 
         if (isset($_POST['appointmentDetail'])) {
 
             if (isset($_POST['hour'])) {
-                $data = [
-                    'date' => $_POST['date'],
-                    'hour' => $_POST['hour'],
-                    'describe_problem' => $_POST['describe_problem'],
-                    'id_patient' => $_SESSION['is_login']['id_account'],
-                    'id_staff' => $_POST['doctor']
+                $dateAp = $_SESSION['year'] . '-' . $_SESSION['month'] . '-' . $_SESSION['day'];
+                $id_patient = $_SESSION['is_login']['id_account'];
+                $appointTime = $this->model->getListTable('appointment', "WHERE date='$dateAp' AND id_patient = $id_patient");
 
-                ];
+                $check = true;
+                foreach ($appointTime as $item) {
+                    if ($item['hour'] == $_POST['hour']) {
+                        $check = false;
 
-                $this->model->InsertData('appointment', $data);
+                    }
+                }
 
-                require_once "./Library/Pusher/vendor/autoload.php";
+                if ($check == true) {
 
-                $options = array(
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                    'be39c21145a308bb822e',
-                    'a3ac9c4ef3152b39c6a7',
-                    '1772586',
-                    $options
-                );
+                    $data = [
+                        'date' => $_POST['date'],
+                        'hour' => $_POST['hour'],
+                        'describe_problem' => $_POST['describe_problem'],
+                        'id_patient' => $_SESSION['is_login']['id_account'],
+                        'id_staff' => $_POST['doctor']
 
-                $hour = $_POST['hour'];
-                $date = $_POST['date'];
-                $doctor = $_POST['doctor'];
+                    ];
 
-                $data = array(
-                    'hour' => $hour,
-                    'date' => $date,
-                    'doctor' => $doctor
-                );
-                $pusher->trigger('my-channel', 'my-event', $data);
-                echo "<script>alert('Đặt lịch khám thành công')</script>";
+                    $this->model->InsertData('appointment', $data);
 
+                    require_once "./Library/Pusher/vendor/autoload.php";
+
+                    $options = array(
+                        'cluster' => 'ap1',
+                        'useTLS' => true
+                    );
+                    $pusher = new Pusher\Pusher(
+                        'be39c21145a308bb822e',
+                        'a3ac9c4ef3152b39c6a7',
+                        '1772586',
+                        $options
+                    );
+
+                    $hour = $_POST['hour'];
+                    $date = $_POST['date'];
+                    $doctor = $_POST['doctor'];
+
+                    $data = array(
+                        'hour' => $hour,
+                        'date' => $date,
+                        'doctor' => $doctor
+                    );
+                    $pusher->trigger('my-channel', 'my-event', $data);
+                    echo "<script>alert('Đặt lịch khám thành công')</script>";
+                    unset($_POST);
+                } else {
+                    echo "<script>alert('Bạn đã đặt giờ khám ngày này rồi! Vui lòng chọn giờ khám khác')</script>";
+                    $redirectUrl = _WEB_ROOT . '/home' . '/appointmentDetail?day=' . $_SESSION['day'] . '&month=' . $_SESSION['month'] . '&year=' . $_SESSION['year'];
+                    header("refresh:0; url=$redirectUrl");
+                    unset($_POST);
+
+                }
             } else {
-                echo "<script>alert('Bạn chưa chọn thời gian khám')</script>";
-
+                echo "<script>alert('Vui lòng chọn giờ khám !')</script>";
                 $redirectUrl = _WEB_ROOT . '/home' . '/appointmentDetail?day=' . $_SESSION['day'] . '&month=' . $_SESSION['month'] . '&year=' . $_SESSION['year'];
-                header("refresh:0.5; url=$redirectUrl");
+                header("refresh:0; url=$redirectUrl");
 
             }
 

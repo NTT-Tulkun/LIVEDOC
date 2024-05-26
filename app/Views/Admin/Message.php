@@ -2,299 +2,244 @@
 require './app/Views/inc/HeaderAdmin.php';
 
 ?>
-<div class="container-fluid">
 
+<body>
+    <main class="content">
+        <div class="container p-0">
 
-    <div class="main-content">
-        <section class="chat-section " style="margin-top: -50px;">
-            <div class="chat-container" style="height: 600px;">
-                <!-- start: Sidebar -->
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-12 col-lg-5 col-xl-3 border-right chatmess">
 
+                        <div class="px-4 d-none d-md-block">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <input type="text" class="form-control my-3" placeholder="Search...">
+                                </div>
 
-                <div class="chat-content row" style=" height: 600px; ">
-                    <!-- start: Content side -->
-
-                    <div class="content-sidebar shadow col-4">
-                        <aside class="chat-sidebar">
-
-                            <ul class="chat-sidebar-menu">
-
-                                <li class="chat-sidebar-profile">
-                                    <button type="button" class="chat-sidebar-profile-toggle">
-                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                    </button>
-                                </li>
-                            </ul>
-                        </aside>
-                        <div class="content-sidebar-title">Chats</div>
-                        <form action="" class="content-sidebar-form">
-                            <input type="search" class="content-sidebar-input" placeholder="Search...">
-                            <button type="submit" class="content-sidebar-submit"><i class="ri-search-line"></i></button>
-                        </form>
-                        <div class="content-messages">
-                            <ul class="content-messages-list">
-                                <li class="content-message-title"><span>Recently</span></li>
-                                <?php foreach ($message as $item) { ?>
-                                    <li>
-                                        <a href="<?php echo _WEB_ROOT; ?>/admin/message/<?php echo $item['id_patient'] ?>"
-                                            data-conversation="#conversation-1">
-                                            <img class="content-message-image"
-                                                src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $item['image'] ?>"
-                                                alt="">
-                                            <span class="content-message-info">
-                                                <span class="content-message-name"><?php echo $item['full_name'] ?></span>
-                                                <span class="content-message-text"><?php echo $item['content'] ?></span>
-                                            </span>
-                                            <span class="content-message-more">
-                                                <span class="content-message-unread bg-primary text-light">5</span>
-                                                <span class="content-message-time">
-                                                    <?php echo date("H:i", strtotime($item['send_date'])); ?>
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-
-                            </ul>
+                            </div>
                         </div>
-                    </div>
-
-                    <?php foreach ($messagePatient as $item) { ?>
-
-                        <div class="col-9" style="position: absolute; right:0px;">
-                            <div class="conversation-top shadow ">
-                                <button type="button" class="conversation-back"><i class="ri-arrow-left-line"></i></button>
-                                <div class="conversation-user">
-                                    <img class="conversation-user-image"
-                                        src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $item['image'] ?>" alt="">
-                                    <div>
-                                        <div class="conversation-user-name">
-                                            <?php echo $item['full_name'] ?>
-                                        </div>
+                        <?php foreach ($message as $item) { ?>
+                            <a href="<?php echo _WEB_ROOT; ?>/admin/message/<?php echo $item['id_patient'] ?>"
+                                class="list-group-item list-group-item-action border-0">
+                                <?php $url = basename($_GET['url']);
+                                if ($url != $item['id_patient']) { ?>
+                                    <div class="badge bg-success float-right">
+                                        <?php echo $item['message_count'] ?>
+                                    </div>
+                                <?php } ?>
+                                <div class="d-flex align-items-start">
+                                    <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $item['image'] ?>"
+                                        class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                    <div class="flex-grow-1 ml-3">
+                                        <?php echo $item['full_name'] ?>
                                     </div>
                                 </div>
-                                <div class="conversation-buttons">
-                                    <a href="tel:0362449211" style="text-decoration: none;"><i
-                                            class="bi bi-telephone-fill text-primary"></i></a>
-                                    <a href="" style="text-decoration: none;"><i
-                                            class="bi bi-info-circle text-primary"></i></a>
+                            </a>
+                        <?php } ?>
+
+
+
+                        <hr class="d-block d-lg-none mt-1 mb-0">
+                    </div>
+                    <div class="col-12 col-lg-7 col-xl-9">
+                        <?php if (isset($patient[0])) { ?>
+                            <div class="py-2 px-4 border-bottom d-none d-lg-block">
+                                <div class="d-flex align-items-center py-1">
+                                    <div class="position-relative">
+                                        <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $patient[0]['image'] ?>"
+                                            class="rounded-circle mr-1" alt="" width="40" height="40">
+                                    </div>
+                                    <div class="flex-grow-1 pl-3">
+                                        <strong><?php echo $patient[0]['full_name'] ?></strong>
+                                    </div>
+                                    <div>
+                                        <a href="tel:<?php echo $patient[0]['phone'] ?>"
+                                            style="text-decoration: none; margin-right:20px;"><i
+                                                class="bi bi-telephone-fill text-primary"></i></a>
+                                        <a href="" style="text-decoration: none;"><i
+                                                class="bi bi-info-circle text-primary"></i></a>
+                                    </div>
                                 </div>
                             </div>
 
+                            <div class="position-relative">
+                                <div class="chat-messages p-4" id="chatMessages"
+                                    style="height: 450px;  overflow-y: scroll;">
+                                    <?php foreach ($messagePatient as $mes) {
+                                        if ($mes['id_sender'] % 2 == 0) {
+                                            ?>
 
-                            <!-- ----------------------- -->
-                            <div class="conversation-main" style=" overflow-y:scroll ; height: 485px;">
-                                <ul class="conversation-wrapper">
-                                    <div class="coversation-divider"><span>Today</span></div>
-                                    <?php
-                                    foreach ($messagePatient as $item) {
-                                        if ($item['sender_id'] == $id_patient) { ?>
+                                            <div class="chat-message-right mb-1">
+                                                <div>
+                                                    <img src="<?php echo _WEB_ROOT; ?>/public/img/favicons/apple-touch-icon.png"
+                                                        class="rounded-circle mr-1" alt="" width="40" height="40">
 
+                                                </div>
+                                                <div class="flex-shrink-1 bg-primary rounded py-2 px-3 mr-3 mt-1 shadow-lg">
+                                                    <span><?php echo $mes['content'] ?></span>
+                                                    <div class="text-light  small text-nowrap mt-2 text-end">
+                                                        <?php echo date("H:i", strtotime($mes['send_date'])); ?>
+
+
+                                                    </div>
+                                                </div>
+                                            </div><br>
+
+                                        <?php } else { ?>
+                                            <div class="chat-message-left pb-1">
+                                                <div class="float-end">
+                                                    <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $mes['image'] ?>"
+                                                        class="rounded-circle mr-1" alt="" width="40" height="40">
+                                                </div><br><br>
+                                                <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3 shadow-lg">
+                                                    <span><?php echo $mes['content'] ?></span>
+                                                    <div class="text-dark small text-nowrap mt-2">
+                                                        <?php echo date("H:i", strtotime($mes['send_date'])); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <?php }
                                     } ?>
 
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-                                    <div>
-                                        <img class="conversation-item-image"
-                                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                            alt="">
-
-                                        <span>OK</span>
-                                    </div>
-
-                                    <li class="conversation-item me">
-                                        <div class="conversation-item-side">
-                                            <img class="conversation-item-image"
-                                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                                alt="">
-                                        </div>
-                                        <div class="conversation-item-content">
-                                            <div class="conversation-item-wrapper">
-                                                <div class="conversation-item-box">
-                                                    <div class="conversation-item-text shadow text-dark">
-                                                        <p><?php echo $item['content'] ?></p>
-                                                        <div class="conversation-item-time text-dark">12:30</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </li>
-                                    <li class="conversation-item">
-                                        <div class="conversation-item-side">
-                                            <img class="conversation-item-image"
-                                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                                                alt="">
-                                        </div>
-                                        <div class="conversation-item-content">
-                                            <div class="conversation-item-wrapper">
-                                                <div class="conversation-item-box">
-                                                    <div class="conversation-item-text bg-primary text-light">
-                                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                                        <div class="conversation-item-time">12:30</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-
-                                </ul>
+                                </div>
                             </div>
 
-                            <!-- 
-                                        --------------------- -->
-                            <div class="conversation-form border shadow-lg">
-
-                                <div class="conversation-form-group rounded-2" style="border: 1px solid #ccc;">
-
-
-                                    <input id="chatMes" type="text" style="width: 100%; outline: none;" class="p-1"
-                                        placeholder="Nhập nội dung chat...">
+                            <div class="flex-grow-0 py-3 px-4 border-top">
+                                <div class="input-group">
+                                    <input id="messageInput" type="text" class="form-control"
+                                        placeholder="Type your message">
+                                    <button id="sendMessageBtn" class="btn btn-primary submit">Gửi</button>
 
                                 </div>
-                                <button type="button" class="conversation-form-button conversation-form-submit bg-primary"
-                                    id="btn_mes"><i class="bi bi-send-fill text-light"></i></button>
                             </div>
-                        </div>
 
-                    <?php } ?>
+                        <?php } else {
+                            echo "<h3 class='text-center mt-3'>Chọn người dùng để chat<h3>";
+                        } ?>
+                    </div>
 
                 </div>
-                <!-- end: Content -->
             </div>
-        </section>
-    </div>
-</div>
+        </div>
+    </main>
+</body>
+
+</html>
 <?php
 require './app/Views/inc/FooterAdmin.php';
 
 ?>
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var button = document.querySelector('.conversation-form-button');
-        var message = document.querySelector('#chatMes'); // Corrected the ID to match the HTML
-
-        function sendMessage() {
-            var inputValue = message.value.trim();
-            if (inputValue !== '') {
-                var listItem = document.createElement('li');
-                listItem.className = 'conversation-item';
-
-                var listItemContent = `
-            <div class="conversation-item-side">
-                <img class="conversation-item-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGVvcGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="">
-            </div>
-            <div class="conversation-item-content">
-                <div class="conversation-item-wrapper">
-                    <div class="conversation-item-box">
-                        <div class="conversation-item-text bg-primary text-light">
-                            <p>${inputValue}</p>
-                            <div class="conversation-item-time">${getCurrentTime()}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-                listItem.innerHTML = listItemContent;
-
-                var conversationList = document.querySelector('.conversation-wrapper');
-                conversationList.appendChild(listItem);
-
-                // Clear input after adding conversation item
-                message.value = '';
-            }
+    // Function to send message
+    function sendMessage() {
+        var message = document.getElementById("messageInput").value;
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("chat-message-right", "pb-4");
+        messageElement.innerHTML = `
+        <div class="float-end">
+            <img src="<?php echo _WEB_ROOT; ?>/public/img/favicons/apple-touch-icon.png"
+                class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+        </div><br><br>
+        <div class="flex-shrink-1 bg-primary rounded py-2 px-3 ml-3 mr-3 shadow-lg">
+            ${message}
+            <div class="text-light small text-nowrap mt-2">${getCurrentTime()}</div>
+        </div>
+    `;
+        var chatMessages = document.getElementById("chatMessages");
+        if (chatMessages) {
+            chatMessages.appendChild(messageElement);
+            document.getElementById("messageInput").value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        } else {
+            console.error("Element with id 'chatMessages' not found.");
         }
 
-        // Click event listener for button
-        button.addEventListener('click', sendMessage);
+        // Return the message to use in AJAX call
+        return message;
+    }
 
-        // Keydown event listener for message
-        message.addEventListener('keydown', function (event) {
-            // Check if the key pressed is Enter (key code 13)
-            if (event.keyCode === 13) {
-                event.preventDefault(); // Prevent default behavior of message (adding new line)
-                sendMessage(); // Call the sendMessage function
+    function getCurrentTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var timeString = hours + ':' + minutes;
+        return timeString;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        function sendMessageAndPost() {
+            var message = sendMessage(); // Get the message here
+            $.ajax({
+                url: "<?php echo _WEB_ROOT ?>/admin/Postmessage/<?php echo $id_patient ?>",
+                method: "POST",
+                data: {
+                    content: message,
+                    id: <?php echo $id_patient ?>
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        document.getElementById("messageInput").addEventListener("keydown", function (event) {
+            // Check if the pressed key is "Enter"
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessageAndPost();
             }
         });
 
-        // Function to get current time in format HH:mm
-        function getCurrentTime() {
-            var now = new Date();
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-        }
+        document.getElementById("sendMessageBtn").addEventListener("click", sendMessageAndPost);
     });
-
 
 </script>
 
-<?php
-// echo "<pre>";
-// print_r($messagePatient);
+<script>
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('ba446993eba998736b81', {
+        cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function (data) {
+        var mesPatient = data.message.content;
+        var id = data.message.id;
+        if (<?php echo $id_patient ?> == id) {
+
+            var parentElement = document.querySelector('.chat-messages');
+            var newMessage = document.createElement('div');
+            newMessage.innerHTML = `
+                                <div class="chat-message-left pb-1">
+                                    <div class="float-end">
+                                        <img src="<?php echo _WEB_ROOT; ?>/public/img/users/<?php echo $item['image'] ?>"
+                                            class="rounded-circle mr-1" alt="" width="40" height="40">
+                                    </div><br><br>
+                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3  shadow-lg">
+                                        <span>${mesPatient}</span>
+                                        <div class="text-dark small text-nowrap mt-2">
+                                            ${getCurrentTime()}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+            parentElement.appendChild(newMessage);
+
+        }
+
+    });
+
+
+    function getCurrentTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        return hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+    }
+</script>

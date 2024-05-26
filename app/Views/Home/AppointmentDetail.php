@@ -2,13 +2,7 @@
 require './app/Views/inc/Header.php';
 
 
-if (isset ($_POST['department'])) {
-  $_SESSION['appointment']['department'] = $_POST['department'];
-}
-if (isset ($_POST['doctor'])) {
-  $_SESSION['appointment']['doctor'] = $_POST['doctor'];
 
-}
 
 ?>
 
@@ -30,19 +24,19 @@ if (isset ($_POST['doctor'])) {
 
           <input type="hidden" name="department" value="<?php echo $_SESSION['appointment']['department'] ?>">
           <input type="hidden" name="doctor" value="<?php echo $_SESSION['appointment']['doctor'] ?>">
-          <input type="hidden" name="date" value="<?php if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) {
+          <input type="hidden" name="date" value="<?php if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) {
             echo "{$_GET['year']}-{$_GET['month']}-{$_GET['day']}";
           } ?>">
           <div class="col-md-12 bg-primary p-2 rounded">
             <p class="text-center text-light display-5">
               <?php
-              if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) {
+              if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) {
                 $year = $_GET['year'];
                 $month = $_GET['month'];
                 $day = $_GET['day'];
 
                 echo "Ngày $day/$month/$year";
-              } elseif (isset ($_GET['month']) && isset ($_GET['year'])) {
+              } elseif (isset($_GET['month']) && isset($_GET['year'])) {
                 $month = $_GET['month'];
                 $year = $_GET['year'];
                 echo "Tháng $month/$year";
@@ -53,15 +47,15 @@ if (isset ($_POST['doctor'])) {
               ?>
             </p>
           </div>
-      
+
           <div class="col-md-5">
-        
+
             <div class="col-md-12 row ">
-              <?php if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) {
+              <?php if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) {
 
                 ?>
                 <table class="table">
-             
+
                   <tr>
                   <tr>
                     <?php
@@ -89,7 +83,7 @@ if (isset ($_POST['doctor'])) {
                       $class = 'border border-primary rounded p-1';
                       $strike = '';
 
-                      if (!empty ($appointment)) {
+                      if (!empty($appointment)) {
                         foreach ($appointment as $item) {
                           if ($item['hour'] == $hour) {
                             $disabled = 'pointer-events: none;';
@@ -128,18 +122,18 @@ if (isset ($_POST['doctor'])) {
               <?php } ?>
             </div>
           </div>
-          <?php if (isset ($_GET['day']) && isset ($_GET['month']) && isset ($_GET['year'])) { ?>
+          <?php if (isset($_GET['day']) && isset($_GET['month']) && isset($_GET['year'])) { ?>
 
-          <div class="col-sm-12 col-md-7 text-center">
+            <div class="col-sm-12 col-md-7 text-center">
 
-            <textarea id="" cols="45" class="rounded border" rows="3" name="describe_problem"
-              placeholder=" Nhập vấn đề hiện tại của bạn..."></textarea>
+              <textarea id="" cols="45" class="rounded border" rows="3" name="describe_problem"
+                placeholder=" Nhập vấn đề hiện tại của bạn..."></textarea>
 
-            <div class="" style="margin-top: 5%; ">
-              <input type="submit" value="Đặt lịch" class="btn btn-primary rounded-pill" name="appointmentDetail">
+              <div class="" style="margin-top: 5%; ">
+                <input type="submit" value="Đặt lịch" class="btn btn-primary rounded-pill" name="appointmentDetail">
 
+              </div>
             </div>
-          </div>
           <?php } ?>
 
 

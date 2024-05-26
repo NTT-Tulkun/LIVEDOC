@@ -91,8 +91,9 @@ foreach ($medicalBill as $item) {
     $name_medicine = $item['name_medicine'];
     $unit = $item['unit'];
     $billQuantity = $item['billQuantity'];
-    $sum += $item['medicine_price'];
+    $sum += $item['medicine_price'] * $item['billQuantity'];
     $medicine_price = currency_format($item['medicine_price']);
+
     $html .= "
     <tr>
         <th>$i</th>

@@ -69,7 +69,7 @@ class Admin extends Controller
             $data['message'] = $content;
             $pusher->trigger('my-channel', 'my-event', $data);
         }
-        $this->view("Admin/mes2", $this->data);
+        $this->view("Admin/Message", $this->data);
     }
 
     public function listMedicine()
@@ -536,12 +536,12 @@ class Admin extends Controller
                     $formatted_date = $date_appointment->format('d/m/Y');
                 }
             }
-           
+
             $email_sdt = $_REQUEST['search'];
         }
 
         foreach ($listPatient_appointment as $appointment) {
-            if(strcasecmp(trim($formatted_date), trim($appointment['dateAppointment'])) == 0){
+            if (strcasecmp(trim($formatted_date), trim($appointment['dateAppointment'])) == 0) {
                 if (strcasecmp(trim($email_sdt), trim($appointment['emailPatient'])) == 0 || strcasecmp(trim($email_sdt), trim($appointment['phonePatient'])) == 0) {
                     $id_appointment = $appointment['id_appointment'];
                     $this->data['id_appointment'] = $id_appointment;

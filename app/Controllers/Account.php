@@ -10,6 +10,7 @@ class Account extends Controller
 
     public function __construct()
     {
+        $_SESSION['appointment']['check'] = false;
         $this->model = $this->model('AccountModel');
     }
 
@@ -255,7 +256,7 @@ class Account extends Controller
 
                             $result = $this->model->updateData('patient', $data, "email = '$email' ");
                             if ($result) {
-                                echo "<script>alert('Tạo mật khẩu thành công')</script>";
+                                echo "<script>alert('Cập nhật lại mật khẩu thành công')</script>";
                                 $redirectUrl = _WEB_ROOT . "/account/login";
                                 header("refresh:0; url=$redirectUrl");
 
@@ -269,12 +270,12 @@ class Account extends Controller
                             ];
                             $result = $this->model->updateData('staff', $data, "email = '$email' ");
                             if ($result) {
-                                echo "<script>alert('Tạo mật khẩu thành công')</script>";
+                                echo "<script>alert('Cập nhật lại mật khẩu thành công')</script>";
                                 $redirectUrl = _WEB_ROOT . "/account/login";
                                 header("refresh:0; url=$redirectUrl");
 
                             } else {
-                                echo "<script>alert('Tạo mật khẩu thất bại')</script>";
+                                echo "<script>alert('Cập nhật lại mật khẩu thất bại')</script>";
 
                             }
                         }

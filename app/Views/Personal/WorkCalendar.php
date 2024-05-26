@@ -206,7 +206,7 @@ $t8 = $_SESSION['t8'];
                                                 <h6 class="text-center text-light">
                                                     <?php echo substr($appoint['hour'], 0, 5) ?>
                                                 </h6>
-                                                <h6>Phòng: 1</h6>
+                                                <h6>Phòng: A4.<?php echo $_SESSION['is_login']['id_account'] ?></h6>
                                                 <p class="text-light" style="font-size: 12px;">Bệnh nhân:
                                                     <?php echo $appoint['fullNamePatient'] ?>
                                                 </p>
@@ -235,14 +235,14 @@ $t8 = $_SESSION['t8'];
                                                                         <th>Năm sinh</th>
                                                                         <th>giới tính</th>
                                                                         <th>số điện thoại</th>
-                                                                        <th>BMI</th>
+
                                                                     </tr>
                                                                     <tr>
                                                                         <th><?php echo $appoint['fullNamePatient'] ?></th>
                                                                         <th><?php echo $appoint['patientBirthday'] ?></th>
                                                                         <th><?php echo $appoint['genderPatient'] ?></th>
                                                                         <th><?php echo $appoint['patientPhone'] ?></th>
-                                                                        <th><?php echo $appoint['BMI'] ?></th>
+
 
 
                                                                     </tr>
@@ -257,12 +257,17 @@ $t8 = $_SESSION['t8'];
                                                         class="text-light border-none rounded" style="font-size: 10px;">
                                                         <button class="btn-light rounded">Phiếu khám</button>
                                                     </a>
-                                                <?php } else { ?>
-                                                    <a href="<?php echo _WEB_ROOT ?>/Personal/medicalBill/<?php echo $appoint['id_appointment'] ?>"
-                                                        class="text-light border-none rounded" style="font-size: 10px;">
-                                                        <button class="btn-primary rounded"> Lập phiếu khám</button>
-                                                    </a>
-                                                <?php } ?>
+                                                <?php } else {
+                                                    $specifiedDate = (new DateTime($appoint['date']))->setTime(0, 0, 0);
+                                                    $currentDate = (new DateTime())->setTime(0, 0, 0);
+                                                    if ($specifiedDate == $currentDate) {
+                                                        ?>
+                                                        <a href="<?php echo _WEB_ROOT ?>/Personal/medicalBill/<?php echo $appoint['id_appointment'] ?>"
+                                                            class="text-light border-none rounded" style="font-size: 10px;">
+                                                            <button class="btn-primary rounded"> Lập phiếu khám</button>
+                                                        </a>
+                                                    <?php }
+                                                } ?>
                                             </div>
                                         <?php }
                                 }
@@ -291,18 +296,20 @@ $t8 = $_SESSION['t8'];
                                     if (strtotime($appoint['hour']) > strtotime('12:00:00')) {
                                         if ($appoint['check'] == 1) {
                                             ?>
-                                            <div class="bg-success m-1 p-2" style="min-height: 195px; max-width: 140px;">
+                                            <div class="bg-warning  m-1 p-2 rounded-3"
+                                                style="min-height: 195px; max-width: 140px; position: relative; overflow: hidden;">
+                                                <p class="bg-danger text-light"
+                                                    style="position: absolute; transform: rotate(55deg); right:-25px; top: 15px; padding: 0px 20px; font-size:10px">
+                                                    Đã khám</p>
                                             <?php } else { ?>
-                                                <div class="bg-secondary m-1 p-2" style="min-height: 195px; max-width: 140px;">
-
+                                                <div class="bg-secondary m-1 p-2 rounded-3" style="min-height: 195px; max-width: 140px;">
                                                 <?php } ?>
 
 
                                                 <h6 class="text-center text-light">
                                                     <?php echo substr($appoint['hour'], 0, 5) ?>
                                                 </h6>
-                                                <h6>Phòng:
-                                                    12344
+                                                <h6>Phòng: A4.<?php echo $_SESSION['is_login']['id_account'] ?>
                                                 </h6>
                                                 <p class="text-light" style="font-size: 12px;">Bệnh nhân:
                                                     <?php echo $appoint['fullNamePatient'] ?>
@@ -332,14 +339,14 @@ $t8 = $_SESSION['t8'];
                                                                         <th>Năm sinh</th>
                                                                         <th>giới tính</th>
                                                                         <th>số điện thoại</th>
-                                                                        <th>email</th>
+
                                                                     </tr>
                                                                     <tr>
                                                                         <th><?php echo $appoint['fullNamePatient'] ?></th>
                                                                         <th><?php echo $appoint['patientBirthday'] ?></th>
                                                                         <th><?php echo $appoint['genderPatient'] ?></th>
                                                                         <th><?php echo $appoint['patientPhone'] ?></th>
-                                                                        <th><?php echo $appoint['BMI'] ?></th>
+
 
 
                                                                     </tr>
@@ -354,12 +361,18 @@ $t8 = $_SESSION['t8'];
                                                         class="text-light border-none rounded" style="font-size: 10px;">
                                                         <button class="btn-light rounded">Xem phiếu</button>
                                                     </a>
-                                                <?php } else { ?>
-                                                    <a href="<?php echo _WEB_ROOT ?>/Personal/medicalBill/<?php echo $appoint['id_appointment'] ?>"
-                                                        class="text-light border-none rounded" style="font-size: 10px;">
-                                                        <button class="btn-primary rounded"> Lập phiếu khám</button>
-                                                    </a>
-                                                <?php } ?>
+                                                <?php } else {
+                                                    $specifiedDate = (new DateTime($appoint['date']))->setTime(0, 0, 0);
+                                                    $currentDate = (new DateTime())->setTime(0, 0, 0);
+                                                    if ($specifiedDate == $currentDate) {
+
+                                                        ?>
+                                                        <a href="<?php echo _WEB_ROOT ?>/Personal/medicalBill/<?php echo $appoint['id_appointment'] ?>"
+                                                            class="text-light border-none rounded" style="font-size: 10px;">
+                                                            <button class="btn-primary rounded"> Lập phiếu khám</button>
+                                                        </a>
+                                                    <?php }
+                                                } ?>
                                             </div>
                                         <?php }
                                 }

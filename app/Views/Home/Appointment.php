@@ -79,7 +79,7 @@ require './app/Views/inc/Header.php';
       <div class="col-lg-6 z-index-2"><img class="w-100"
           src="<?php echo _WEB_ROOT; ?>/public/img/gallery/appointment.png" alt="..." /></div>
       <div class="col-lg-6 z-index-2" style="margin-top:70px;">
-        <form class="row g-3" action="<?php echo _WEB_ROOT; ?>/Home/appointmentDetail" method="POST">
+        <form class="row g-3" action="" method="POST">
 
           <div class="col-md-12">
             <label class="form-label text-dark">Chọn phòng khám:</label>
@@ -95,12 +95,7 @@ require './app/Views/inc/Header.php';
                 <?php }
               } ?>
             </select>
-            <p class="text-danger error">
-              <?php
-              if (!empty($error['department'])) {
-                echo $error['department'];
-              } ?>
-            </p>
+
           </div>
 
           <div class="col-md-12">
@@ -109,9 +104,12 @@ require './app/Views/inc/Header.php';
             </select>
             <p class="text-danger error">
               <?php
-              if (!empty($error['doctor'])) {
-                echo $error['doctor'];
-              } ?>
+              if (isset($_POST['sub_appointment'])) {
+                if (!isset($_POST['doctor']) || $_POST['doctor'] == 0) {
+                  echo 'Vui lòng chọn bác sĩ khám';
+                }
+              }
+              ?>
             </p>
           </div>
 
@@ -144,7 +142,7 @@ require './app/Views/inc/Footer.php';
 
     switch (selectedValue) {
       <?php foreach ($departments as $department) { ?>
-                  case "<?php echo $department['id_department'] ?>":
+                                                                case "<?php echo $department['id_department'] ?>":
       secondSelect.innerHTML = '<option value="0">---Vui lòng chọn 1 bác sĩ---</option>';
       <?php foreach ($doctors as $doctor) { ?>
         <?php if ($doctor['id_department'] == $department['id_department']) { ?>
@@ -158,5 +156,3 @@ require './app/Views/inc/Footer.php';
   }
   }
 </script>
-<?php
-
